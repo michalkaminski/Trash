@@ -8,6 +8,7 @@ import network.components.Layer;
 import network.components.Network;
 import network.components.activationfunctions.ActivationFunction;
 import network.components.neurons.*;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,12 +18,12 @@ import java.util.ListIterator;
  */
 public class BackPropagation {
 
-    private float error=0f;
-    private static final float LEARNING_RATE = 0.12f;
+    private float error = 0f;
+    private static final float LEARNING_RATE = 0.32f;
 
     public void train(Network network, DataSet dataSet, ActivationFunction activationFunctions, CostFunction costFunction) {
         List<DataRow> dataRows = dataSet.getDataRows();
-        for(int n=0;n<5000;n++) {
+        for (int n = 0; n < 10000; n++) {
             for (DataRow dataRow : dataRows) {
                 feedForward(network, activationFunctions, costFunction, dataRow);
                 backPropagate(network, activationFunctions, costFunction, dataRow);
@@ -31,7 +32,7 @@ public class BackPropagation {
         }
     }
 
-    public void feedForward(Network network, ActivationFunction activationFunctions, CostFunction costFunction, DataRow dataRow) {
+    public void feedForward(Network network, ActivationFunction aF, CostFunction cF, DataRow dataRow) {
         ListIterator<Layer> li = network.getLayers().listIterator();
         while (li.hasNext()) {
             if (!li.hasPrevious()) {
@@ -57,21 +58,21 @@ public class BackPropagation {
                 LinkedList<Neuron> neurons = layer.getNeurons();
                 /* Hidden Layer */
                 for (Neuron neuron : neurons) {
-                    float inputSum=0f;
+                    float inputSum = 0f;
                     for (Connection connection : neuron.getConnections()) { //getToConnections
-                        if(connection.getToNeuron().equals(neuron)) {
+                        if (connection.getToNeuron().equals(neuron)) {
                             inputSum += connection.getWeight() * connection.getFromNeuron().getOutput();
                         }
                     }
                     neuron.setInput(inputSum);
-                    neuron.setOutput(activationFunctions.getActivation(inputSum));
+                    neuron.setOutput(aF.getActivation(inputSum));
 
                 }
                 if (!li.hasNext()) {
                 /* Output Layer */
                     int i = 0;
                     for (Neuron neuron : neurons) {
-                        this.setError(dataRow.getResults().get(0)-neuron.getOutput());
+                        this.setError(aF.getActivation(dataRow.getResults().get(i)) - neuron.getOutput());
                         i++;
                     }
                 }
@@ -90,11 +91,11 @@ public class BackPropagation {
                 for (Neuron neuron : neurons) {
                     float delta = 0f;
                     delta = LEARNING_RATE *
-                            aF.getDerivative(neuron.getInput())*
+                            aF.getDerivative(neuron.getInput()) *
                             //derivative cost
                             cF.getDerivative(
                                     aF.getActivation(neuron.getOutput())
-                                    ,dataRow.getResults().get(i));
+                                    , dataRow.getResults().get(i));
                     neuron.setDelta(delta);
                     i++;
                 }
@@ -107,29 +108,29 @@ public class BackPropagation {
                     List<Connection> fromConnections = neuron.getConnections(); //getFromConnections
                     float weightedSum = 0f;
                     for (Connection toConnection : fromConnections) {
-                        if(toConnection.getFromNeuron().equals(neuron)) {
+                        if (toConnection.getFromNeuron().equals(neuron)) {
                             weightedSum += toConnection.getWeight() * toConnection.getToNeuron().getDelta();
                         }
-                            //https://youtu.be/I2I5ztVfUSE?t=157
+                        //https://youtu.be/I2I5ztVfUSE?t=157
                     }
                     //https://youtu.be/I2I5ztVfUSE?t=319
-                    float innerDelta=0f;
+                    float innerDelta = 0f;
                     List<Connection> toConnections = neuron.getConnections(); //getToConnections
                     for (Connection toConnection : toConnections) {
-                        if(toConnection.getToNeuron().equals(neuron)) {
+                        if (toConnection.getToNeuron().equals(neuron)) {
                             innerDelta += toConnection.getWeight() * toConnection.getFromNeuron().getOutput();
                         }
-                        }
+                    }
 
 
-                    float totalDelta=LEARNING_RATE *aF.getDerivative(innerDelta)*weightedSum;
+                    float totalDelta = LEARNING_RATE * aF.getDerivative(innerDelta) * weightedSum;
                     neuron.setDelta(totalDelta);
 
 
-                    for(Connection connection:neuron.getConnections())  //getToConnections
+                    for (Connection connection : neuron.getConnections())  //getToConnections
                     {
                         if (connection.getFromNeuron().equals(neuron)) {
-                            connection.setWeight(connection.getWeight() - connection.getFromNeuron().getDelta());
+                            connection.setWeight(connection.getWeight() - connection.getFromNeuron().getDelta());//
                         }
                     }
 
@@ -138,18 +139,11 @@ public class BackPropagation {
                 if (!li.hasPrevious()) {
                 /* Input Layer */
                     for (Neuron neuron : neurons) {
-                     //   neuron.setCost(cF.getCost(neuron.getActivationOutput(), dataRow.getResults().get(i)));
+                        //   neuron.setCost(cF.getCost(neuron.getActivationOutput(), dataRow.getResults().get(i)));
                     }
                 } else {
                 }
             }
-
-
-
-
-
-
-
 
 
         }

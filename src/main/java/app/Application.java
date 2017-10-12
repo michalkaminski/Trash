@@ -55,6 +55,7 @@ public class Application {
         dataSet.getDataRows().add(dataRow3);
         dataSet.getDataRows().add(dataRow4);
 
+        System.out.println(network);
 
         ActivationFunction activationFunctions=new ActivationSigmoid();
         CostFunction costFunction= new CostQuadratic();
