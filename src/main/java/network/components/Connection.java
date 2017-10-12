@@ -16,7 +16,9 @@ public Connection()
     Random rand = new Random();
     this.weight = rand.nextFloat();
 }
-    private Neuron neuron;
+    private Neuron fromNeuron;
+    private Neuron toNeuron;
+
     private float weight;
 
     public float getWeight() {
@@ -28,12 +30,20 @@ public Connection()
     }
 
 
-    public Neuron getNeuron() {
-        return neuron;
+    public Neuron getFromNeuron() {
+        return fromNeuron;
     }
 
-    public void setNeuron(Neuron neuron) {
-        this.neuron = neuron;
+    public void setFromNeuron(Neuron fromNeuron) {
+        this.fromNeuron = fromNeuron;
+    }
+
+    public Neuron getToNeuron() {
+        return toNeuron;
+    }
+
+    public void setToNeuron(Neuron toNeuron) {
+        this.toNeuron = toNeuron;
     }
 
     @Override

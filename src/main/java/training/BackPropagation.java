@@ -58,8 +58,10 @@ public class BackPropagation {
                 /* Hidden Layer */
                 for (Neuron neuron : neurons) {
                     float inputSum=0f;
-                    for (Connection connection : neuron.getToConnections()) {
-                        inputSum+=connection.getWeight()*connection.getNeuron().getOutput();
+                    for (Connection connection : neuron.getConnections()) { //getToConnections
+                        if(connection.getToNeuron().equals(neuron)) {
+                            inputSum += connection.getWeight() * connection.getFromNeuron().getOutput();
+                        }
                     }
                     neuron.setInput(inputSum);
                     neuron.setOutput(activationFunctions.getActivation(inputSum));
@@ -86,7 +88,6 @@ public class BackPropagation {
                 /* Output Layer */
                 int i = 0;
                 for (Neuron neuron : neurons) {
-                    List<Connection> toConnections = neuron.getToConnections();
                     float delta = 0f;
                     delta = LEARNING_RATE *
                             aF.getDerivative(neuron.getInput())*
@@ -94,7 +95,6 @@ public class BackPropagation {
                             cF.getDerivative(
                                     aF.getActivation(neuron.getOutput())
                                     ,dataRow.getResults().get(i));
-
                     neuron.setDelta(delta);
                     i++;
                 }
@@ -104,28 +104,33 @@ public class BackPropagation {
                 LinkedList<Neuron> neurons = layer.getNeurons();
                 int i = 0;
                 for (Neuron neuron : neurons) {
-                    List<Connection> toConnections = neuron.getFromConnections();
+                    List<Connection> fromConnections = neuron.getConnections(); //getFromConnections
                     float weightedSum = 0f;
-                    for (Connection toConnection : toConnections) {
-                        weightedSum += toConnection.getWeight() * toConnection.getNeuron().getDelta();
-                        //https://youtu.be/I2I5ztVfUSE?t=157
+                    for (Connection toConnection : fromConnections) {
+                        if(toConnection.getFromNeuron().equals(neuron)) {
+                            weightedSum += toConnection.getWeight() * toConnection.getToNeuron().getDelta();
+                        }
+                            //https://youtu.be/I2I5ztVfUSE?t=157
                     }
                     //https://youtu.be/I2I5ztVfUSE?t=319
                     float innerDelta=0f;
-                    List<Connection> fromConnections = neuron.getToConnections();
-                    for (Connection fromConnection : fromConnections) {
-                        innerDelta+=fromConnection.getWeight()*fromConnection.getNeuron().getOutput();
-                    }
+                    List<Connection> toConnections = neuron.getConnections(); //getToConnections
+                    for (Connection toConnection : toConnections) {
+                        if(toConnection.getToNeuron().equals(neuron)) {
+                            innerDelta += toConnection.getWeight() * toConnection.getFromNeuron().getOutput();
+                        }
+                        }
 
 
                     float totalDelta=LEARNING_RATE *aF.getDerivative(innerDelta)*weightedSum;
                     neuron.setDelta(totalDelta);
 
 
-
-                    for(Connection connection:neuron.getToConnections())
+                    for(Connection connection:neuron.getConnections())  //getToConnections
                     {
-                        connection.setWeight(connection.getWeight()-connection.getNeuron().getDelta());
+                        if (connection.getFromNeuron().equals(neuron)) {
+                            connection.setWeight(connection.getWeight() - connection.getFromNeuron().getDelta());
+                        }
                     }
 
                     i++;

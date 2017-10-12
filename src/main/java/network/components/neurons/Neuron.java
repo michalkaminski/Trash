@@ -19,22 +19,15 @@ public  class Neuron {
     private float error;
     private float delta; //gradient
 
-    private List<Connection> toConnections=new ArrayList<Connection>();
-    private List<Connection> fromConnections=new ArrayList<Connection>();
-
-
-
-
+    private List<Connection> connections=new ArrayList<Connection>();
 
     public void connectToNeuron(Neuron toNeuron)
     {
-        Connection fromConnection=new Connection();
-        fromConnection.setNeuron(toNeuron);
-        this.getFromConnections().add(fromConnection);
-
-        Connection toConnection=new Connection();
-        toConnection.setNeuron(this);
-        toNeuron.getToConnections().add(toConnection);
+        Connection connection=new Connection();
+        connection.setFromNeuron(this);
+        connection.setToNeuron(toNeuron);
+        this.getConnections().add(connection);
+        toNeuron.getConnections().add(connection);
     }
 
 
@@ -47,25 +40,14 @@ public  class Neuron {
         this.output = output;
     }
 
-    public List<Connection> getToConnections() {
-        return toConnections;
+
+    public List<Connection> getConnections() {
+        return connections;
     }
 
-    public void setToConnections(List<Connection> toConnections) {
-        this.toConnections = toConnections;
+    public void setConnections(List<Connection> connections) {
+        this.connections = connections;
     }
-
-    public List<Connection> getFromConnections() {
-        return fromConnections;
-    }
-
-    public void setFromConnections(List<Connection> fromConnections) {
-        this.fromConnections = fromConnections;
-    }
-
-
-
-
 
     public float getError() {
         return error;
@@ -97,11 +79,9 @@ public  class Neuron {
     public String toString() {
 
         return "["+this.getClass().getSimpleName() +
-                ": from=" + fromConnections.size() +
-                ";to=" + toConnections.size() +
+                ": conn=" + connections.size() +
                 ";o=" + output +"]"+
-        ": from=" + fromConnections +
-                ";to=" + toConnections
-                ;
+        ": conn=" + connections
+                 ;
     }
 }
