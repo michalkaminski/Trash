@@ -11,10 +11,20 @@ import java.util.Random;
 
 public class Connection {
 
+    float minX = -1f;
+    float maxX = 1f;
+
+    public Connection(Neuron fromNeuron,Neuron toNeuron,float weight)
+    {
+        this.fromNeuron=fromNeuron;
+        this.toNeuron=toNeuron;
+        this.weight=weight;
+    }
+
 public Connection()
 {
     Random rand = new Random();
-    this.weight = rand.nextFloat();
+    this.weight = rand.nextFloat()* (maxX - minX) + minX;;
 }
     private Neuron fromNeuron;
     private Neuron toNeuron;

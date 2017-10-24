@@ -1,10 +1,12 @@
 package network.components.neurons;
 
 import network.components.Connection;
+import network.components.Layer;
 import network.components.activationfunctions.ActivationFunction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by michal on 28.09.2017.
@@ -12,12 +14,18 @@ import java.util.List;
 
 public  class Neuron {
 
-    public Neuron(){}
+    public Neuron()
+    {}
+    public Neuron(String name){
+    this.name=name;
+    }
+    private String name;
     private float input;
     private float output;
 
-    private float error;
-    private float delta; //gradient
+    private float cost;
+    private float dcost_dpred;
+
 
     private List<Connection> connections=new ArrayList<Connection>();
 
@@ -30,6 +38,20 @@ public  class Neuron {
         toNeuron.getConnections().add(connection);
     }
 
+    public void connectToNeuron(Neuron toNeuron, float weight)
+    {
+        Connection connection=new Connection(this,toNeuron,weight);
+        this.getConnections().add(connection);
+        toNeuron.getConnections().add(connection);
+    }
+
+    public void connectToLayer(Layer layer)
+    {
+        for(Neuron neuron:layer.getNeurons())
+        {
+            this.connectToNeuron(neuron);
+        }
+    }
 
 
     public float getOutput() {
@@ -49,23 +71,22 @@ public  class Neuron {
         this.connections = connections;
     }
 
-    public float getError() {
-        return error;
+
+    public float getCost() {
+        return cost;
     }
 
-    public void setError(float error) {
-        this.error = error;
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 
-
-    public float getDelta() {
-        return delta;
+    public float getDcost_dpred() {
+        return dcost_dpred;
     }
 
-    public void setDelta(float delta) {
-        this.delta = delta;
+    public void setDcost_dpred(float dcost_dpred) {
+        this.dcost_dpred = dcost_dpred;
     }
-
 
     public float getInput() {
         return input;
@@ -78,10 +99,7 @@ public  class Neuron {
     @Override
     public String toString() {
 
-        return "["+this.getClass().getSimpleName() +
-                ": conn=" + connections.size() +
-                ";o=" + output +"]"+
-        ": conn=" + connections
+        return this.getClass().getSimpleName()
                  ;
     }
 }

@@ -28,6 +28,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -47,8 +49,10 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
     private double sumx2 = 0.0;
     private double sumy2 = 0.0;
     private double sumxy = 0.0;
-    private double[] x = new double[10000];
-    private double[] y = new double[10000];
+    private double[] x  ;
+    private double[] y ;
+    private List<Float> xValues=new ArrayList<Float>();
+    private List<Float> yValues=new ArrayList<Float>();
     private double a, an, b, bn;
     private int width=700, height=530;
     private double scaleX=1, scaleY=1;
@@ -63,6 +67,7 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
     private JCheckBox editModeB;
     private JCheckBox findBestModel;
     private JSlider scaleSlider;
+    private JSlider scaleYslider;
     private JLabel xyInfo;
     private Panel btnPanel;
     private JLabel sliderLabel;
@@ -136,6 +141,20 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
         scaleSlider.setForeground(Color.black);
         scaleSlider.setFont(new Font("TimesRoman", Font.PLAIN,10));
 
+
+        scaleYslider=new JSlider();
+        scaleYslider.setPreferredSize(new Dimension(90,40));
+        scaleYslider.addChangeListener(this);
+//        scaleYslider.setMajorTickSpacing(200000);
+//        scaleYslider.setMinorTickSpacing(10000);
+        scaleYslider.setPaintLabels(false);
+        scaleYslider.setValue(scaleSlider.getMaximum());
+        scaleYslider.setMaximum(1000000);
+        scaleYslider.setMinimum(0);
+        scaleYslider.setBackground(appBgColor);
+        scaleYslider.setForeground(Color.black);
+        scaleYslider.setFont(new Font("TimesRoman", Font.PLAIN,10));
+
         xyInfo = new JLabel("");
         xyInfo.setPreferredSize(new Dimension(95, 40));
         xyInfo.setFont(new Font("TimesRoman", Font.PLAIN,10));
@@ -150,6 +169,7 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
         btnPanel.add(findBestModel);
         btnPanel.add(sliderLabel);
         btnPanel.add(scaleSlider);
+        btnPanel.add(scaleYslider);
         btnPanel.add(xyInfo);
         btnPanel.setBackground(appBgColor);
 //Inicjalizacja appletu
@@ -162,16 +182,16 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
         setSize((int)width, (int)height);
         setVisible(true);
 //odczyt parametru z kodu HTML
-        String xValues = getParameter("XVAL");
-        String yValues = getParameter("YVAL");
 
         if (xValues!=null){
-            String[] xD = xValues.split(" ");
-            String[] yD = yValues.split(" ");
+            Float[] xD = xValues.toArray(new Float[xValues.size()]);
+            Float[] yD = yValues.toArray(new Float[yValues.size()]);
+            x=new double[xValues.size()];
+            y=new double[yValues.size()];
             if(xD.length==yD.length){
                 for(N=0;N<xD.length;N++){
-                    x[N]=Double.parseDouble((xD[N]));
-                    y[N]=Double.parseDouble((yD[N]));
+                    x[N]=((xD[N]));
+                    y[N]=((yD[N]));
                     sumx  += x[N];
                     sumy  += y[N];
                     sumx2 += x[N]*x[N];
@@ -386,10 +406,15 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
     }
     //Aktualizacja modelu gdy zmieni sie rozmiar okna
     public void stateChanged(ChangeEvent e) {
-        JSlider source = (JSlider)e.getSource();
-        double scale=(double)source.getValue()/100;
-        scaleX=scale;
-        scaleY=scale;
+
+        double scale = (double) ((JSlider)e.getSource()).getValue() / 100;
+
+        if ((JSlider)e.getSource()==scaleSlider) {
+            scaleX = scale;
+        }
+        if ((JSlider)e.getSource()==scaleYslider) {
+            scaleY = scale;
+        }
         repaint();
     }
 
@@ -442,5 +467,22 @@ public class LeastSquares extends Applet implements   MouseMotionListener, Mouse
                 }
             }
         }
+    }
+
+
+    public List<Float> getxValues() {
+        return xValues;
+    }
+
+    public void setxValues(List<Float> xValues) {
+        this.xValues = xValues;
+    }
+
+    public List<Float> getyValues() {
+        return yValues;
+    }
+
+    public void setyValues(List<Float> yValues) {
+        this.yValues = yValues;
     }
 }

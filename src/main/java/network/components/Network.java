@@ -43,11 +43,6 @@ private LinkedList<Layer> layers=new LinkedList<Layer>();
         }
     }
 
-    public float getError()
-    {
-//        not implemented yet
-        return 0f;
-    }
 
     public void removeLayer(Layer layer)
     {
@@ -61,6 +56,9 @@ private LinkedList<Layer> layers=new LinkedList<Layer>();
     public void setLayers(LinkedList<Layer> layers) {
         this.layers = layers;
     }
+
+
+
 
     @Override
     public String toString() {

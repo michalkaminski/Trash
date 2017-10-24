@@ -19,8 +19,6 @@ public class Layer {
        for(int i=0;i<numberOfNeurons;i++)
         {
             neurons.add((Neuron) neuronClass.newInstance());
-
-
         }
     }
 
@@ -54,8 +52,13 @@ public class Layer {
 
     @Override
     public String toString() {
-        return "\n" +
-                "layerName=" + layerName + "\n" +
-                  neurons;
+
+        String ls=layerName+":";
+        for(Neuron neuron:neurons)
+        {
+            ls=ls+" ("+neuron+")";
+        }
+
+        return '\n'+ls+'\n';
     }
 }
