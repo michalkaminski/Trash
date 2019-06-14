@@ -27,7 +27,7 @@ public class Application {
         Network network=new Network();
 
         Layer inputLayer=new Layer(Neuron.class,2);
-        Layer hiddenLayer=new Layer(Neuron.class,220);
+        Layer hiddenLayer=new Layer(Neuron.class,50);
         Layer outputLayer=new Layer(Neuron.class,1);
         Neuron b1 = new Bias();
         Neuron b2 = new Bias();

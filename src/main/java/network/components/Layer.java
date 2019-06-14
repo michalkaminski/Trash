@@ -9,27 +9,24 @@ import java.util.LinkedList;
  */
 public class Layer {
 
-    static int layerNo=0;
-    private LinkedList<Neuron> neurons=new LinkedList<Neuron>();
+    static int layerNo = 0;
+    private LinkedList<Neuron> neurons = new LinkedList<Neuron>();
     private String layerName;
 
-    public Layer(Class neuronClass,int numberOfNeurons) throws IllegalAccessException, InstantiationException {
+    public Layer(Class neuronClass, int numberOfNeurons) throws IllegalAccessException, InstantiationException {
         layerNo++;
-        this.layerName=layerNo+"";
-       for(int i=0;i<numberOfNeurons;i++)
-        {
+        this.layerName = layerNo + "";
+        for (int i = 0; i < numberOfNeurons; i++) {
             neurons.add((Neuron) neuronClass.newInstance());
         }
     }
 
-    public Layer(String layerName)
-    {
-    layerNo++;
-        this.layerName=layerNo+"";
+    public Layer(String layerName) {
+        layerNo++;
+        this.layerName = layerNo + "";
     }
 
-    public void addNeuron(Neuron neuron)
-    {
+    public void addNeuron(Neuron neuron) {
         neurons.add(neuron);
     }
 
@@ -53,12 +50,11 @@ public class Layer {
     @Override
     public String toString() {
 
-        String ls=layerName+":";
-        for(Neuron neuron:neurons)
-        {
-            ls=ls+" ("+neuron+")";
+        String ls = layerName + ":";
+        for (Neuron neuron : neurons) {
+            ls = ls + " (" + neuron + ")";
         }
 
-        return '\n'+ls+'\n';
+        return '\n' + ls + '\n';
     }
 }
