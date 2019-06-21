@@ -9,10 +9,8 @@ import org.springframework.stereotype.Component;
 
 public class Bias extends Neuron {
 
-    public Bias()
-    {
-
-    }
+    public Bias(){}
+    public Bias(String name){super(name);}
 
 
 }

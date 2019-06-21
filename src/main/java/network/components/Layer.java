@@ -1,51 +1,38 @@
 package network.components;
 
+import lombok.Getter;
+import lombok.Setter;
 import network.components.neurons.Neuron;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-/**
- * Created by michal on 28.09.2017.
- */
+@Getter
+@Setter
 public class Layer {
 
     static int layerNo = 0;
-    private LinkedList<Neuron> neurons = new LinkedList<Neuron>();
+
+    private List<Neuron> neurons = new ArrayList<Neuron>();
     private String layerName;
 
     public Layer(Class neuronClass, int numberOfNeurons) throws IllegalAccessException, InstantiationException {
         layerNo++;
-        this.layerName = layerNo + "";
-        for (int i = 0; i < numberOfNeurons; i++) {
-            neurons.add((Neuron) neuronClass.newInstance());
+        this.layerName = Integer.toString(layerNo);
+        for (int i = 1; i <= numberOfNeurons; i++) {
+            Neuron neuron=(Neuron) neuronClass.newInstance();
+            neuron.setName(Integer.toString(i));
+            neurons.add(neuron);
         }
     }
 
-    public Layer(String layerName) {
-        layerNo++;
-        this.layerName = layerNo + "";
-    }
 
     public void addNeuron(Neuron neuron) {
         neurons.add(neuron);
     }
 
 
-    public LinkedList<Neuron> getNeurons() {
-        return neurons;
-    }
-
-    public void setNeurons(LinkedList<Neuron> neurons) {
-        this.neurons = neurons;
-    }
-
-    public String getLayerName() {
-        return layerName;
-    }
-
-    public void setLayerName(String layerName) {
-        this.layerName = layerName;
-    }
 
     @Override
     public String toString() {
@@ -54,7 +41,6 @@ public class Layer {
         for (Neuron neuron : neurons) {
             ls = ls + " (" + neuron + ")";
         }
-
         return '\n' + ls + '\n';
     }
 }

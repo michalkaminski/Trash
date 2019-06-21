@@ -1,39 +1,40 @@
 package network.components;
 
-import network.components.Layer;
+import lombok.Getter;
+import lombok.Setter;
 import network.components.neurons.Neuron;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by michal on 29.09.2017.
  */
 
-
+@Getter
+@Setter
 public class Network {
 
-private LinkedList<Layer> layers=new LinkedList<Layer>();
+private List<Layer> layers=new LinkedList<Layer>();
 
-    public Network()
-    {
+    public Network() {}
 
-    }
 
     public void addLayer(Layer layer)
     {
         if(!layers.isEmpty())
         {
-            Layer lastLayer = layers.getLast();
+            Layer lastLayer = (Layer) ((LinkedList)layers).getLast();
             connectLayers(lastLayer,layer);
+        //TODO Lastlayer??/ only two layer possible?
+
         }
             layers.add(layer);
-
     }
 
     private void connectLayers(Layer lastLayer, Layer newLayer) {
-        LinkedList<Neuron> lastNeurons = lastLayer.getNeurons();
-        LinkedList<Neuron> newNeurons = newLayer.getNeurons();
+        List<Neuron> lastNeurons = lastLayer.getNeurons();
+        List<Neuron> newNeurons = newLayer.getNeurons();
         for(Neuron lastNeuron:lastNeurons)
         {
             for(Neuron newNeuron:newNeurons)
@@ -48,15 +49,6 @@ private LinkedList<Layer> layers=new LinkedList<Layer>();
     {
         layers.remove(layer);
     }
-
-    public LinkedList<Layer> getLayers() {
-        return layers;
-    }
-
-    public void setLayers(LinkedList<Layer> layers) {
-        this.layers = layers;
-    }
-
 
 
 
