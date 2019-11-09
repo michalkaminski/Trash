@@ -956,6 +956,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @throws IllegalArgumentException if any coordinate is either NaN or infinite
      */
     public static void line(double x0, double y0, double x1, double y1) {
+        if(Double.isNaN(x0) || Double.isInfinite(x0) || Double.isNaN(y0) || Double.isInfinite(y0)
+        || Double.isNaN(x1) || Double.isInfinite(x1) || Double.isNaN(y1) || Double.isInfinite(y1)
+        ) return;
+
         validate(x0, "x0");
         validate(y0, "y0");
         validate(x1, "x1");
@@ -989,6 +993,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @throws IllegalArgumentException if either {@code x} or {@code y} is either NaN or infinite
      */
     public static void point(double x, double y) {
+        if(Double.isNaN(x) || Double.isInfinite(x) || Double.isNaN(y) || Double.isInfinite(y)) return;
         validate(x, "x");
         validate(y, "y");
 

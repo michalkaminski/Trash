@@ -5,6 +5,8 @@ import libra.functions.IFunction;
 import lombok.extern.slf4j.Slf4j;
 import n.draw.StdDraw;
 
+import java.awt.*;
+
 
 @Slf4j
 public class EulerVisualizationVF2D {
@@ -50,11 +52,16 @@ public class EulerVisualizationVF2D {
             for (double t = -START; t <= SCALE; t += h) {
 
                 StdDraw.setPenRadius(0.001d);
-                StdDraw.setPenColor(StdDraw.RED);
 
-                StdDraw.point(x, y);
+
                 sX = h*functionX.derivative(x,y);
                 sY = h*functionY.derivative(x,y);
+
+                int color = new Double(1905000/h*(Math.pow(Math.pow(sX, 2) + Math.pow(sY, 2), 0.5))).intValue();
+               // log.info(""+1000/h*(Math.pow(Math.pow(sX, 2) + Math.pow(sY, 2), 0.5)));
+                StdDraw.point(x, y);
+
+                StdDraw.setPenColor(new Color(color));
                 StdDraw.line(x,y, x+sX, y+sY);
 
                 x+=sX;
