@@ -1,18 +1,18 @@
-package n.draw.f;
+package libra.functions;
 
 /**
  * Created by michal on 23.05.2019.
  */
-public class FunctionXSinX2 implements Function {
+public class FunctionX6_1 implements IFunction {
     @Override
     public double valueOf(double... arg) {
         double x = arg[0];
-        return x*Math.sin(Math.pow(x,2))+1;
+        return 2*Math.pow(x,6)+3*Math.pow(x,5)+Math.pow(x,3)-1;
     }
 
     @Override
     public double derivative(double... arg) {
         double x = arg[0];
-        return Math.sin(Math.pow(x,2))+2*Math.pow(x,2)*Math.cos(Math.pow(x,2));
+        return 6*2*Math.pow(x,5)+5*3*Math.pow(x,4)+3*Math.pow(x,2);
     }
 }

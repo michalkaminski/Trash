@@ -1,9 +1,9 @@
-package n.draw.f;
+package libra.functions;
 
 /**
  * Created by michal on 23.05.2019.
  */
-public interface Function {
+public interface IFunction {
 
     double valueOf(double ... arg);
     double derivative(double ... arg);

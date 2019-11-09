@@ -6,6 +6,7 @@ import data.DataSet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import n.draw.StdDraw;
 import network.components.Connection;
 import network.components.Layer;
 import network.components.Network;
@@ -22,21 +23,37 @@ import java.util.ListIterator;
 @Setter
 public class BackPropagation {
 
+    double SCALE=0.40d;
+
+
+
     private static final float LEARNING_RATE = 0.35f;
 
     List<Float> xs = new ArrayList<>();
     List<Float> ys = new ArrayList<>();
 
-    public void train(Network network, DataSet dataSet, ActivationFunction activationFunctions, CostFunction costFunction, int iterations) {
+public BackPropagation() {
+    StdDraw.setXscale(-0.1,SCALE);
+    StdDraw.setYscale(-0.3,SCALE);
+    StdDraw.setPenRadius(.003);
+    StdDraw.enableDoubleBuffering();
+}
 
+    public void train(Network network, DataSet dataSet, ActivationFunction activationFunctions, CostFunction costFunction, int iterations) {
+        float previousTotalCost=0;
+        float totalCost;
         xs = new ArrayList<>();
         ys = new ArrayList<>();
 
         List<DataRow> dataRows = dataSet.getDataRows();
         for (int i = 0; i < iterations; i++) {
             for (DataRow dataRow : dataRows) {
-                log.info(i + ":" + feedForward(network, activationFunctions, costFunction, dataRow));
+                totalCost=feedForward(network, activationFunctions, costFunction, dataRow);
+                log.info(i + ":" +totalCost);
                 backPropagate(network, activationFunctions);
+
+                visualize(i,previousTotalCost,totalCost);
+                previousTotalCost=totalCost;
 
             }
             xs.add((float) i);
@@ -55,7 +72,6 @@ public class BackPropagation {
     }
 
     public float feedForward(Network network, ActivationFunction aF, CostFunction cF, DataRow dataRow) throws RuntimeException {
-
         float totalCost = 0f;
 
         for (Layer layer : network.getLayers()) {
@@ -111,7 +127,7 @@ public class BackPropagation {
 
             i++;
         }
-
+        log.info("total cost:[{}]",Float.toString(totalCost));
         return totalCost;
     }
 
@@ -186,4 +202,19 @@ public class BackPropagation {
                 }
             }
     }
+
+
+    static void visualize(int i, float previousTotalCost, float cost)
+    {
+           // StdDraw.clear();
+        StdDraw.setPenColor(StdDraw.BLACK);
+
+        StdDraw.line(-1000,0,1000,0);
+        StdDraw.line(0,-1000,0,1000);
+
+        StdDraw.setPenColor(StdDraw.RED);
+
+        StdDraw.point(cost, cost-previousTotalCost);
+            StdDraw.show();
+        }
 }

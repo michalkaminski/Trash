@@ -1,9 +1,8 @@
 package n.draw;
 
 import lombok.extern.slf4j.Slf4j;
-import n.draw.StdDraw;
-import n.draw.f.Function;
-import n.draw.f.FunctionXSinX2;
+import libra.functions.IFunction;
+import libra.functions.FunctionXSinX2;
 
 /**
  * Created by michal on 23.05.2019.
@@ -18,7 +17,7 @@ public class NMain {
         double STEP=0.005d;
         double FORWARD=0.01d;
 
-        Function f =new FunctionXSinX2();
+        IFunction f =new FunctionXSinX2();
 
         StdDraw.setXscale(-SCALE,SCALE);
         StdDraw.setYscale(-SCALE,SCALE);

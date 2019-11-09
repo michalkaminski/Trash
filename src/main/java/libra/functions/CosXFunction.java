@@ -1,18 +1,20 @@
-package n.draw.f;
+package libra.functions;
 
 /**
  * Created by michal on 23.05.2019.
  */
-public class FunctionX6_1 implements Function {
+public class CosXFunction implements IFunction {
     @Override
     public double valueOf(double... arg) {
         double x = arg[0];
-        return 2*Math.pow(x,6)+3*Math.pow(x,5)+Math.pow(x,3)-1;
+        return x;
     }
 
     @Override
     public double derivative(double... arg) {
         double x = arg[0];
-        return 6*2*Math.pow(x,5)+5*3*Math.pow(x,4)+3*Math.pow(x,2);
+        double y = arg[1];
+
+        return -x-0.25*y;
     }
 }
