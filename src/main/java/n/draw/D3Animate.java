@@ -13,20 +13,12 @@ import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
-
-public class D3Animate
-        extends AbstractAnalysis
-          {
-
+public class D3Animate extends AbstractAnalysis {
 
     protected Chart chart;
 
-
-
-
     public static void main(String[] args) throws Exception {
-
-        AnalysisLauncher.open( new D3Animate());
+        AnalysisLauncher.open(new D3Animate());
     }
 
     @Override
@@ -40,33 +32,22 @@ public class D3Animate
             }
         };
 
-
-
-
         Range range = new Range(-150, 150);
         int steps = 50;
 
         Shape surface = Builder.buildOrthonormal(new OrthonormalGrid(range, steps), mapper);
 
-
         surface.setColorMapper(new ColorMapper(new ColorMapRainbow(), surface.getBounds().getZmin(), surface.getBounds().getZmax(), new org.jzy3d.colors.Color(1, 1, 1, .5f)));
-
         surface.setFaceDisplayed(true);
         surface.setWireframeDisplayed(true);
         surface.setWireframeColor(Color.GRAY);
 
         chart.add(surface);
 
-
-
-
     }
 
     public Chart getChart() {
         return chart;
     }
-
-
-
 
 }
