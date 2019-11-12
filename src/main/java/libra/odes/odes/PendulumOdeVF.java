@@ -3,53 +3,54 @@ package libra.odes.odes;
 import javafx.util.Pair;
 import libra.functions.IFunction;
 import libra.initialcondition.InitialConditions;
-import libra.odes.visual.EulerVisualizationVF2D;
+import libra.odes.visual.ScatterVisualization2D;
+import org.jzy3d.analysis.AnalysisLauncher;
 
-public class ZTestOde {
+public class PendulumOdeVF {
     public static void main(String[] args) throws Exception {
-        double SCALE = 50;
-        double STEP = 0.01d;
+        double SCALE = 300;
+        double STEP = 0.05d;
         double START = 0d;
+        double BOUNDARY=5d;
         Pair<Double, Double>[] initialConditions = InitialConditions.getInitialConditions(
-                -2, 2, 200);
+                -BOUNDARY, BOUNDARY, 500);
 
-
-        EulerVisualizationVF2D eVF2D=new EulerVisualizationVF2D(
-                new XFunction(),
-                new YFunction(),
-                initialConditions,
-                SCALE,
-                2,
-                STEP,
-                START
-
-        );
-        eVF2D.visualize();
-
-//        AnalysisLauncher.open(new ScatterVisualization(
+//        EulerVisualizationVF2D vis = new EulerVisualizationVF2D(
 //                new XFunction(),
 //                new YFunction(),
 //                initialConditions,
 //                SCALE,
+//                BOUNDARY,
 //                STEP,
 //                START
-//        ));
+//        );
+//        vis.visualize();
+
+        AnalysisLauncher.open(new ScatterVisualization2D(
+                new XFunction(),
+                new YFunction(),
+                initialConditions,
+                5,
+                STEP,
+                START
+        ));
+
 
     }
-
+//http://terpconnect.umd.edu/~petersd/246/matlabode2.html
     private static class XFunction implements IFunction {
         @Override
         public double valueOf(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return x;
+            return y;
         }
 
         @Override
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return y/ Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),0.5);
+            return y;
         }
     }
 
@@ -64,7 +65,7 @@ public class ZTestOde {
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return -x/ Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),2);
+            return -Math.sin(x);
         }
     }
 }

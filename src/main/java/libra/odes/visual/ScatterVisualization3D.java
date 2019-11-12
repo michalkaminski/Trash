@@ -2,27 +2,26 @@ package libra.odes.visual;
 
 import javafx.util.Pair;
 import libra.functions.IFunction;
+import org.apache.commons.lang3.tuple.Triple;
 import org.jzy3d.analysis.AbstractAnalysis;
 import org.jzy3d.chart.factories.AWTChartComponentFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.LineStrip;
 import org.jzy3d.plot3d.primitives.Point;
-import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
-public class ScatterVisualization extends AbstractAnalysis{
+public class ScatterVisualization3D extends AbstractAnalysis{
 
     IFunction functionX;
     IFunction functionY;
+    IFunction functionZ;
 
-    Pair<Double, Double> initialCondition[];
+    Triple<Double, Double, Double> initialCondition[];
 
     double SCALE;
     double h;
@@ -30,16 +29,18 @@ public class ScatterVisualization extends AbstractAnalysis{
     private LinkedBlockingQueue<LineStrip> lineStrips=new LinkedBlockingQueue<>();
 
 
-    public ScatterVisualization(
+    public ScatterVisualization3D(
             IFunction functionX,
             IFunction functionY,
-            Pair<Double, Double> initialCondition[],
+            IFunction functionZ,
+            Triple<Double, Double, Double> initialCondition[],
             double SCALE,
             double STEP,
             double START
     ) {
         this.functionX = functionX;
         this.functionY=functionY;
+        this.functionZ=functionZ;
         this.initialCondition = initialCondition;
         this.SCALE = SCALE;
         this.h = STEP;
@@ -49,49 +50,39 @@ public class ScatterVisualization extends AbstractAnalysis{
     @Override
     public void init(){
         float a = 0.25f;
-        List<Coord3d> pointsList=new ArrayList<>();
-        List<Color> colorsList=new ArrayList<>();
 
         double sX;
         double sY;
+        double sZ;
 
         for (int i = 0; i <= initialCondition.length-1; i++) {
-            float x = this.initialCondition[i].getKey().floatValue();
-            float y = this.initialCondition[i].getValue().floatValue();
+            float x = this.initialCondition[i].getLeft().floatValue();
+            float y = this.initialCondition[i].getMiddle().floatValue();
+            float z = this.initialCondition[i].getRight().floatValue();
+
+            LineStrip ls = new LineStrip();
 
             for (double t = -START; t <= SCALE; t += h) {
 
-                sX = h*functionX.derivative(x,y);
-                sY = h*functionY.derivative(x,y);
+                sX = h*functionX.derivative(x,y,z);
+                sY = h*functionY.derivative(x,y,z);
+                sZ = h*functionZ.derivative(x,y,z);
 
-                pointsList.add(new Coord3d((float)(x+sX), (float)(y+sY), 0.0f));
-                colorsList.add(new Color((float)(x+sX), (float)(y+sY), 0.0f, a));
-
-                LineStrip ls = new LineStrip();
-                ls.add(new Point(new Coord3d(x, y, 0), Color.GRAY));
-                ls.add(new Point(new Coord3d((float)(x+sX), (float)(y+sY),0), Color.GRAY));
+                ls.add(new Point(new Coord3d(x, y, z), Color.GRAY));
+                ls.add(new Point(new Coord3d((float)(x+sX), (float)(y+sY),(float)(z+sZ)), new Color((float)(x+sX), (float)(y+sY), (float)(z+sZ), a)));
                 ls.setDisplayed(true);
-                this.lineStrips.add(ls);
 
                 x+=sX;
                 y+=sY;
+                z+=sZ;
             }
-
-
-
+            this.lineStrips.add(ls);
 
         }
-
-        Scatter scatter = new Scatter(pointsList.toArray(new Coord3d[pointsList.size()]), colorsList.toArray(new Color[colorsList.size()]));
         chart = AWTChartComponentFactory.chart(Quality.Advanced, "newt");
-
-
-
         Iterator<LineStrip> lsIterator = this.lineStrips.iterator();
         while (lsIterator.hasNext()) {
             chart.getScene().getGraph().add(lsIterator.next());
         }
-
-        chart.getScene().add(scatter);
     }
 }

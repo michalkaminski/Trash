@@ -19,6 +19,7 @@ public class EulerVisualizationVF2D {
     double SCALE;
     double h;
     double START;
+    double MAX=0;
 
     double defaultRadius = StdDraw.getPenRadius();
 
@@ -34,6 +35,25 @@ public class EulerVisualizationVF2D {
         this.functionY=functionY;
         this.initialCondition = initialCondition;
         this.SCALE = SCALE;
+        this.h = STEP;
+        this.START = START;
+    }
+
+
+    public EulerVisualizationVF2D(
+            IFunction functionX,
+            IFunction functionY,
+            Pair<Double, Double> initialCondition[],
+            double SCALE,
+            double MAX,
+            double STEP,
+            double START
+    ) {
+        this.functionX = functionX;
+        this.functionY=functionY;
+        this.initialCondition = initialCondition;
+        this.SCALE = SCALE;
+        this.MAX=MAX;
         this.h = STEP;
         this.START = START;
     }
@@ -84,9 +104,15 @@ public class EulerVisualizationVF2D {
         StdDraw.enableDoubleBuffering();
         StdDraw.clear();
 
-        StdDraw.setXscale(-SCALE, SCALE);
-        StdDraw.setYscale(-SCALE, SCALE);
-
+        if(MAX==0) {
+            StdDraw.setXscale(-SCALE, SCALE);
+            StdDraw.setYscale(-SCALE, SCALE);
+        }
+        else
+        {
+            StdDraw.setXscale(-MAX, MAX);
+            StdDraw.setYscale(-MAX, MAX);
+        }
         /** axis */
         StdDraw.setPenColor(StdDraw.BOOK_BLUE);
         StdDraw.line(0, -SCALE, 0, SCALE);
