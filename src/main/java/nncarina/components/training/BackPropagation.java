@@ -1,8 +1,8 @@
-package nncarina.training;
+package nncarina.components.training;
 
-import nncarina.costfunctions.CostFunction;
-import nncarina.data.DataRow;
-import nncarina.data.DataSet;
+import nncarina.components.costfunctions.CostFunction;
+import nncarina.components.data.DataRow;
+import nncarina.components.data.DataSet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

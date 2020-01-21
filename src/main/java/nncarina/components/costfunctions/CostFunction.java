@@ -1,4 +1,4 @@
-package nncarina.costfunctions;
+package nncarina.components.costfunctions;
 
 /**
  * Created by michal on 29.09.2017.

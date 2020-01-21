@@ -1,4 +1,4 @@
-package nncarina.data;
+package nncarina.components.data;
 
 import java.util.ArrayList;
 import java.util.List;
