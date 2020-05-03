@@ -1,5 +1,10 @@
-package complexsystems.flock.components;
+package complexsystems.components;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class VectorState {
 
     public double x, y;
@@ -57,4 +62,9 @@ public class VectorState {
     public static double getDistance(VectorState v1) {
         return Math.sqrt(Math.pow(v1.x, 2) + Math.pow(v1.y, 2));
     }
+
+    public double getScalarSpeed() {
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    }
+
 }

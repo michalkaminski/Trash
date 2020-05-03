@@ -1,6 +1,9 @@
 package complexsystems.coronavirus.components;
 
-public class Patient {
+import complexsystems.components.Turtle;
+import complexsystems.components.VectorState;
+
+public class Patient extends Turtle {
 
     public VectorState position;
     public VectorState velocity;

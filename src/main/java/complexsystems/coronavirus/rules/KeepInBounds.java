@@ -5,8 +5,10 @@
  */
 package complexsystems.coronavirus.rules;
 
+import complexsystems.components.Rule;
+import complexsystems.components.Turtle;
 import complexsystems.coronavirus.components.Patient;
-import complexsystems.coronavirus.components.VectorState;
+import complexsystems.components.VectorState;
 
 public class KeepInBounds extends Rule {
 
@@ -22,7 +24,10 @@ public class KeepInBounds extends Rule {
     }
 
     @Override
-    public VectorState change(Patient patient, Patient[] flock) {
+    public VectorState change(Turtle turtle, Turtle[] turtles) {
+        Patient patient = (Patient) turtle;
+        Patient[] patients = (Patient[]) turtles;
+
         VectorState v = new VectorState(0, 0);
 
         if (patient.position.x > MAX_X) {

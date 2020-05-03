@@ -5,8 +5,10 @@
  */
 package complexsystems.coronavirus.rules;
 
+import complexsystems.components.Rule;
+import complexsystems.components.Turtle;
 import complexsystems.coronavirus.components.Patient;
-import complexsystems.coronavirus.components.VectorState;
+import complexsystems.components.VectorState;
 
 public class KeepTowardCentre extends Rule {
 
@@ -17,12 +19,15 @@ public class KeepTowardCentre extends Rule {
     }
 
     @Override
-    public VectorState change(Patient patient, Patient[] flock) {
+    public VectorState change(Turtle turtle, Turtle[] turtles) {
+        Patient patient = (Patient) turtle;
+        Patient[] patients = (Patient[]) turtles;
+
         VectorState p = patient.position;
 
         int i = 1;
 
-        for (Patient b : flock) {
+        for (Patient b : patients) {
             if (b != patient && VectorState.getDistance(VectorState.sub(b.position, patient.position)) < DISTANCE) {
                 p = VectorState.add(p, b.position);
                 i++;

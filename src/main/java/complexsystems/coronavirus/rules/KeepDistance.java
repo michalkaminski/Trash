@@ -1,8 +1,11 @@
 package complexsystems.coronavirus.rules;
 
+import complexsystems.components.Rule;
+import complexsystems.components.Turtle;
 import complexsystems.coronavirus.components.Patient;
 import complexsystems.coronavirus.components.PatientGroup;
-import complexsystems.coronavirus.components.VectorState;
+import complexsystems.components.VectorState;
+import complexsystems.flock.components.Bird;
 
 public class KeepDistance extends Rule {
 
@@ -17,7 +20,10 @@ public class KeepDistance extends Rule {
     }
 
     @Override
-    public VectorState change(Patient patient, Patient[] flock) {
+    public VectorState change(Turtle turtle, Turtle[] turtles) {
+        Patient patient = (Patient) turtle;
+        Patient[] patients = (Patient[]) turtles;
+
         VectorState c = new VectorState(0, 0);
 
         for (Patient b : PatientGroup.get()) {
@@ -32,4 +38,5 @@ public class KeepDistance extends Rule {
         return VectorState.divScalar(c, 8);
 
     }
+
 }

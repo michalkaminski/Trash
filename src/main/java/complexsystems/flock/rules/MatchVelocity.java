@@ -1,7 +1,9 @@
 package complexsystems.flock.rules;
 
+import complexsystems.components.Rule;
+import complexsystems.components.Turtle;
+import complexsystems.components.VectorState;
 import complexsystems.flock.components.Bird;
-import complexsystems.flock.components.VectorState;
 
 public class MatchVelocity extends Rule {
 
@@ -12,7 +14,9 @@ public class MatchVelocity extends Rule {
     }
 
     @Override
-    public VectorState change(Bird bird, Bird[] flock) {
+    public VectorState change(Turtle turtle, Turtle[] turtles) {
+        Bird bird = (Bird) turtle;
+        Bird[] flock = (Bird[]) turtles;
 
         int i = 1;
 

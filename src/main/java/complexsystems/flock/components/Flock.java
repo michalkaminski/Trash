@@ -3,7 +3,8 @@ package complexsystems.flock.components;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import complexsystems.flock.rules.Rule;
+import complexsystems.components.Rule;
+import complexsystems.components.VectorState;
 
 public class Flock {
 

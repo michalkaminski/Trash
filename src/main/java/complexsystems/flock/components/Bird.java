@@ -1,6 +1,9 @@
 package complexsystems.flock.components;
 
-public class Bird {
+import complexsystems.components.Turtle;
+import complexsystems.components.VectorState;
+
+public class Bird extends Turtle {
 
     public VectorState position;
     public VectorState velocity;

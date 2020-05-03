@@ -1,8 +1,10 @@
 package complexsystems.flock.rules;
 
+import complexsystems.components.Rule;
+import complexsystems.components.Turtle;
+import complexsystems.components.VectorState;
 import complexsystems.flock.components.Flock;
 import complexsystems.flock.components.Bird;
-import complexsystems.flock.components.VectorState;
 
 public class KeepDistance extends Rule {
 
@@ -17,7 +19,10 @@ public class KeepDistance extends Rule {
     }
 
     @Override
-    public VectorState change(Bird bird, Bird[] flock) {
+    public VectorState change(Turtle turtle, Turtle[] turtles) {
+        Bird bird = (Bird) turtle;
+        Bird[] flock = (Bird[]) turtles;
+
         VectorState c = new VectorState(0, 0);
 
         for (Bird b : FLOCK.get()) {

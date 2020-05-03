@@ -1,6 +1,7 @@
 package complexsystems.coronavirus.components;
 
-import complexsystems.coronavirus.rules.Rule;
+import complexsystems.components.Rule;
+import complexsystems.components.VectorState;
 import lombok.Getter;
 import lombok.Setter;
 

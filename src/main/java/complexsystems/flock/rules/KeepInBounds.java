@@ -5,8 +5,10 @@
  */
 package complexsystems.flock.rules;
 
+import complexsystems.components.Rule;
+import complexsystems.components.Turtle;
+import complexsystems.components.VectorState;
 import complexsystems.flock.components.Bird;
-import complexsystems.flock.components.VectorState;
 
 public class KeepInBounds extends Rule {
 
@@ -22,7 +24,10 @@ public class KeepInBounds extends Rule {
     }
 
     @Override
-    public VectorState change(Bird bird, Bird[] flock) {
+    public VectorState change(Turtle turtle, Turtle[] turtles) {
+        Bird bird = (Bird) turtle;
+        Bird[] flock = (Bird[]) turtles;
+
         VectorState v = new VectorState(0, 0);
 
         if (bird.position.x > MAX_X) {
