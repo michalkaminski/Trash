@@ -6,7 +6,7 @@ import nncarina.components.data.DataSet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import odedorado.demos.StdDraw;
+import odes.demos.StdDraw;
 import nncarina.components.Connection;
 import nncarina.components.Layer;
 import nncarina.components.Network;
@@ -23,24 +23,22 @@ import java.util.ListIterator;
 @Setter
 public class BackPropagation {
 
-    double SCALE=0.40d;
-
-
+    double SCALE = 0.40d;
 
     private static final float LEARNING_RATE = 0.35f;
 
     List<Float> xs = new ArrayList<>();
     List<Float> ys = new ArrayList<>();
 
-public BackPropagation() {
-    StdDraw.setXscale(-0.1,SCALE);
-    StdDraw.setYscale(-0.3,SCALE);
-    StdDraw.setPenRadius(.003);
-    StdDraw.enableDoubleBuffering();
-}
+    public BackPropagation() {
+        StdDraw.setXscale(-0.1, SCALE);
+        StdDraw.setYscale(-0.3, SCALE);
+        StdDraw.setPenRadius(.003);
+        StdDraw.enableDoubleBuffering();
+    }
 
     public void train(Network network, DataSet dataSet, ActivationFunction activationFunctions, CostFunction costFunction, int iterations) {
-        float previousTotalCost=0;
+        float previousTotalCost = 0;
         float totalCost;
         xs = new ArrayList<>();
         ys = new ArrayList<>();
@@ -48,20 +46,17 @@ public BackPropagation() {
         List<DataRow> dataRows = dataSet.getDataRows();
         for (int i = 0; i < iterations; i++) {
             for (DataRow dataRow : dataRows) {
-                totalCost=feedForward(network, activationFunctions, costFunction, dataRow);
-                log.info(i + ":" +totalCost);
+                totalCost = feedForward(network, activationFunctions, costFunction, dataRow);
+                log.info(i + ":" + totalCost);
                 backPropagate(network, activationFunctions);
 
-                visualize(i,previousTotalCost,totalCost);
-                previousTotalCost=totalCost;
+                visualize(i, previousTotalCost, totalCost);
+                previousTotalCost = totalCost;
 
             }
             xs.add((float) i);
-
         }
-
     }
-
 
     public void test(Network network, DataSet dataSet, ActivationFunction activationFunctions, CostFunction costFunction) {
         log.info("Testing results:");
@@ -117,7 +112,7 @@ public BackPropagation() {
                     cost = cF.getCost(neuron.getOutput(), dataRow.getResults().get(i));
                     neuron.setCost(cost);
                     //* 0 jak zmieni sie koszt gdy zmieni sie waga laczaca z poprzedzajacym neuronem */
-                        /* 1 tylko dla output layer */
+                    /* 1 tylko dla output layer */
                     //Jak zmienia sie wartosc kosztu w zaleznosci od zmiany outputu(prediction)
                     dCost = cF.getDerivative(neuron.getOutput(), dataRow.getResults().get(i));
                     neuron.setDcost_dpred(dCost);
@@ -127,7 +122,7 @@ public BackPropagation() {
 
             i++;
         }
-        log.info("total cost:[{}]",Float.toString(totalCost));
+        log.info("total cost:[{}]", Float.toString(totalCost));
         return totalCost;
     }
 
@@ -204,17 +199,16 @@ public BackPropagation() {
     }
 
 
-    static void visualize(int i, float previousTotalCost, float cost)
-    {
-           // StdDraw.clear();
+    static void visualize(int i, float previousTotalCost, float cost) {
+        // StdDraw.clear();
         StdDraw.setPenColor(StdDraw.BLACK);
 
-        StdDraw.line(-1000,0,1000,0);
-        StdDraw.line(0,-1000,0,1000);
+        StdDraw.line(-1000, 0, 1000, 0);
+        StdDraw.line(0, -1000, 0, 1000);
 
         StdDraw.setPenColor(StdDraw.RED);
 
-        StdDraw.point(cost, cost-previousTotalCost);
-            StdDraw.show();
-        }
+        StdDraw.point(cost, cost - previousTotalCost);
+        StdDraw.show();
+    }
 }
