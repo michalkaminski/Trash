@@ -22,16 +22,16 @@ public class Runner {
         List<Point> values;
 
         Visualization2D visualization2D = new Visualization2D(
-                0.001d,
+                0.005d,
                 VIS_SIZE,
                 VIS_SIZE,
                 VIS_SIZE);
 
 
-        PatientGroup patientsGroup1 = new PatientGroup(2000, 10, 500, -500, 500, -500);
+        PatientGroup patientsGroup1 = new PatientGroup(100, 10, 500, -500, 500, -500);
 
         patientsGroup1.addRule(new KeepInBounds(VIS_SIZE/2, -VIS_SIZE/2, VIS_SIZE/2, -VIS_SIZE/2, 10));
-        patientsGroup1.addRule(new KeepDistance(1, patientsGroup1, 8));
+        patientsGroup1.addRule(new KeepDistance(5));
         patientsGroup1.addRule(new MatchVelocity(50));
 
         while (true) {

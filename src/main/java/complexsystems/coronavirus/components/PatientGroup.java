@@ -54,7 +54,7 @@ public class PatientGroup {
 
     private void limitSpeed(Patient b) {
         if (VectorState.getDistance(b.velocity) > maxSpeed) {
-//            b.velocity = VectorState.multScalar(VectorState.divScalar(b.velocity, VectorState.getDistance(b.velocity)), maxSpeed);
+            b.velocity = VectorState.multScalar(VectorState.divScalar(b.velocity, VectorState.getDistance(b.velocity)), maxSpeed);
         }
     }
 }
