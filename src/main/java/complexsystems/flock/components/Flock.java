@@ -44,7 +44,7 @@ public class Flock {
     public void update() {
         for (Bird b : flock) {
             calculateVelocity(b);
-            limitSpeed(b);
+//            limitSpeed(b);
         }
         for (Bird b : flock) {
             b.move();
@@ -59,9 +59,4 @@ public class Flock {
         b.velocity = VectorState.add(b.velocity, change);
     }
 
-    private void limitSpeed(Bird b) {
-        if (VectorState.getDistance(b.velocity) > maxSpeed) {
-            b.velocity = VectorState.multScalar(VectorState.divScalar(b.velocity, VectorState.getDistance(b.velocity)), maxSpeed);
-        }
-    }
 }

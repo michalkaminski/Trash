@@ -9,32 +9,30 @@ import complexsystems.flock.components.Bird;
 public class KeepDistance extends Rule {
 
     private final double DISTANCE;
-    private final Flock FLOCK;
+    private final Flock flock;
     private final double divider;
+
     public KeepDistance(double distance, Flock flock, double divider) {
         DISTANCE = distance;
-        FLOCK = flock;
-        this.divider=divider;
+        this.flock = flock;
+        this.divider = divider;
 
     }
 
     @Override
     public VectorState change(Turtle turtle, Turtle[] turtles) {
-        Bird bird = (Bird) turtle;
-        Bird[] flock = (Bird[]) turtles;
 
+        Bird currentBird = (Bird) turtle;
         VectorState c = new VectorState(0, 0);
 
-        for (Bird b : FLOCK.get()) {
-            if (b != bird) {
-                if (VectorState.getDistance(VectorState.sub(b.position, bird.position)) < DISTANCE) {
-                    c = VectorState.sub(c, VectorState.sub(b.position, bird.position));
-                    return VectorState.divScalar(c, divider);
+        for (Bird otherBird : this.flock.get()) {
+            if (otherBird != currentBird) {
+                if (VectorState.getDistance(VectorState.sub(otherBird.position, currentBird.position)) < DISTANCE) {
+                    c = VectorState.sub(c, VectorState.sub(otherBird.position, currentBird.position));
                 }
             }
         }
-        //TODO WHAT IS 8?
-        return VectorState.divScalar(c, 8);
+        return c;
 
     }
 }

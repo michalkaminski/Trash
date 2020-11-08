@@ -33,8 +33,10 @@ public class Screen extends JPanel {
     }
 
     private void draw(Graphics2D g2d) {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         g2d.setColor(Color.black);
-        g2d.fillRect(0, 0, 1000, 1000);
+        g2d.fillRect(0, 0, screenSize.width, screenSize.height);
 
         Flock[] flocks = flockList.toArray(new Flock[flockList.size()]);
         for (Flock flock : flocks) {

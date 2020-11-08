@@ -14,6 +14,7 @@ public class KeepInBounds extends Rule {
 
     private final int MAX_X, MIN_X, MAX_Y, MIN_Y;
     private final double RETURN_SPEED;
+    private final double BACK_POSITION = 1d;
 
     public KeepInBounds(int maxX, int minX, int maxY, int minY, double returnSpeed) {
         MAX_X = maxX;
@@ -26,12 +27,11 @@ public class KeepInBounds extends Rule {
     @Override
     public VectorState change(Turtle turtle, Turtle[] turtles) {
         Bird bird = (Bird) turtle;
-        Bird[] flock = (Bird[]) turtles;
 
         VectorState v = new VectorState(0, 0);
 
         if (bird.position.x > MAX_X) {
-            v.x = -RETURN_SPEED;
+            v.x = -BACK_POSITION;
         } else if (bird.position.x < MIN_X) {
             v.x = RETURN_SPEED;
         }
