@@ -5,7 +5,6 @@ import odes.components.functions.IFunction;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Plane2Dcooling {
@@ -26,15 +25,12 @@ public class Plane2Dcooling {
             }
         }
 
-        Screen screen = new Screen(20, 20, planePoints);
+        Screen screen = new Screen(70, 70, planePoints);
 
         while (true) {
             iterate(planePoints);
             screen.repaint();
-
         }
-
-
     }
 
     private static void iterate(List<Point> planePoints) {

@@ -1,4 +1,4 @@
-package nncarina.components;
+package nncarina.components.networkelements;
 
 import lombok.Getter;
 import lombok.Setter;

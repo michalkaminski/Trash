@@ -7,7 +7,7 @@ import odes.components.visualizations.EulerVisualizationVF2D;
 
 public class Ode9VF {
     public static void main(String[] args) {
-        double SCALE = 2;
+        double SCALE = 5;
         double STEP = 0.001d;
         double START = 0d;
         Pair<Double, Double>[] initialConditions = InitialConditions.getInitialConditions(

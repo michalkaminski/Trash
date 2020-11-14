@@ -7,9 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import odes.demos.StdDraw;
-import nncarina.components.Connection;
-import nncarina.components.Layer;
-import nncarina.components.Network;
+import nncarina.components.networkelements.Connection;
+import nncarina.components.networkelements.Layer;
+import nncarina.components.networkelements.Network;
 import nncarina.components.activationfunctions.ActivationFunction;
 import nncarina.components.neurons.*;
 

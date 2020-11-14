@@ -25,6 +25,7 @@ public class Ode3VF {
     }
 
     private static class XFunction implements IFunction {
+
         @Override
         public double valueOf(double... arg) {
             double x = arg[0];
@@ -57,7 +58,7 @@ public class Ode3VF {
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return -y / (Math.pow(x + 1, 2) + Math.pow(y, 2)) - y / (Math.pow(x - 1, 2) + Math.pow(y, 2));
+            return - y / (Math.pow(x + 1, 2) + Math.pow(y, 2)) - y / (Math.pow(x - 1, 2) + Math.pow(y, 2));
 
         }
 

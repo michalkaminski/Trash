@@ -2,8 +2,8 @@ package nncarina.components.neurons;
 
 import lombok.Getter;
 import lombok.Setter;
-import nncarina.components.Connection;
-import nncarina.components.Layer;
+import nncarina.components.networkelements.Connection;
+import nncarina.components.networkelements.Layer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -73,7 +73,6 @@ public class EulerVisualizationVF2D {
 
                 StdDraw.setPenRadius(0.001d);
 
-
                 sX = h*functionX.derivative(x,y);
                 sY = h*functionY.derivative(x,y);
 
