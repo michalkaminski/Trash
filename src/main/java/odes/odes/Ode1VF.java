@@ -1,17 +1,17 @@
-package odes.components.odes;
+package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;
 import odes.components.functions.initialcondition.InitialConditions;
 import odes.components.visualizations.EulerVisualizationVF2D;
 
-public class Ode9VF {
+public class Ode1VF {
     public static void main(String[] args) {
-        double SCALE = 5;
-        double STEP = 0.001d;
+        double SCALE = 200;
+        double STEP = 0.01d;
         double START = 0d;
         Pair<Double, Double>[] initialConditions = InitialConditions.getInitialConditions(
-                -3, 3, 5000);
+                -100, 100, 500);
 
         EulerVisualizationVF2D vis = new EulerVisualizationVF2D(
                 new XFunction(),
@@ -28,15 +28,13 @@ public class Ode9VF {
         @Override
         public double valueOf(double... arg) {
             double x = arg[0];
-            double y = arg[1];
             return x;
         }
-
         @Override
         public double derivative(double... arg) {
             double x = arg[0];
-            double y = arg[1];
-            return y/ Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),0.5);
+            double y=arg[1];
+            return 0.5*y;
         }
 
         @Override
@@ -51,12 +49,11 @@ public class Ode9VF {
             double x = arg[0];
             return x;
         }
-
         @Override
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return -x/ Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),2);
+            return 0.5*x;
         }
 
         @Override

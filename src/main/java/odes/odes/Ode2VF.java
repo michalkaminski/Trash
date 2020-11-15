@@ -1,9 +1,8 @@
-package odes.components.odes;
+package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;
 import odes.components.functions.initialcondition.InitialConditions;
-import odes.components.visualizations.EulerVisualizationVF2D;
 import odes.components.visualizations.ScatterVisualization2D;
 import org.jzy3d.analysis.AnalysisLauncher;
 

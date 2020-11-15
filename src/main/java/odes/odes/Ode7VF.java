@@ -1,64 +1,49 @@
-package odes.components.odes;
+package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;
 import odes.components.functions.initialcondition.InitialConditions;
 import odes.components.visualizations.EulerVisualizationVF2D;
-import odes.components.visualizations.ScatterVisualization2D;
-import org.jzy3d.analysis.AnalysisLauncher;
 
-public class PendulumOdeVF {
-    public static void main(String[] args) throws Exception {
-        double SCALE = 300;
-        double STEP = 0.05d;
+public class Ode7VF {
+    public static void main(String[] args) {
+        double SCALE = 3;
+        double STEP = 0.01d;
         double START = 0d;
-        double BOUNDARY=5d;
         Pair<Double, Double>[] initialConditions = InitialConditions.getInitialConditions(
-                -BOUNDARY, BOUNDARY, 500);
+                -3, 3, 5000);
 
         EulerVisualizationVF2D vis = new EulerVisualizationVF2D(
                 new XFunction(),
                 new YFunction(),
                 initialConditions,
-                20,
-                14,
+                SCALE,
                 STEP,
                 START
         );
         vis.visualize();
-
-        AnalysisLauncher.open(new ScatterVisualization2D(
-                new XFunction(),
-                new YFunction(),
-                initialConditions,
-                5,
-                STEP,
-                START
-        ));
-
-
     }
-//http://terpconnect.umd.edu/~petersd/246/matlabode2.html
+
     private static class XFunction implements IFunction {
         @Override
         public double valueOf(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return y;
+            return x;
         }
 
         @Override
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return y;
+            return -y/ (Math.pow(x + 1, 2) + Math.pow(y, 2)) - y / (Math.pow(x - 1, 2) + Math.pow(y, 2));
         }
 
-    @Override
-    public double secondDerivative(double... arg) {
-        return 0;
+        @Override
+        public double secondDerivative(double... arg) {
+            return 0;
+        }
     }
-}
 
     private static class YFunction implements IFunction {
         @Override
@@ -71,7 +56,7 @@ public class PendulumOdeVF {
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return -Math.sin(x);
+            return (x+1) / (Math.pow(x + 1, 2) + Math.pow(y, 2)) + (x-1) / (Math.pow(x - 1, 2) + Math.pow(y, 2));
         }
 
         @Override

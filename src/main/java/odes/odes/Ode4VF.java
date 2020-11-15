@@ -1,11 +1,11 @@
-package odes.components.odes;
+package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;
 import odes.components.functions.initialcondition.InitialConditions;
 import odes.components.visualizations.EulerVisualizationVF2D;
 
-public class Ode6VF {
+public class Ode4VF {
     public static void main(String[] args) {
         double SCALE = 3;
         double STEP = 0.01d;
@@ -30,14 +30,13 @@ public class Ode6VF {
             double x = arg[0];
             double y = arg[1];
             return x;
-        }
+         }
 
         @Override
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return y/ (Math.pow(x + 1, 2) + Math.pow(y, 2)) - y / (Math.pow(x - 1, 2) + Math.pow(y, 2));
-
+            return (x + 1) / (Math.pow(x + 1, 2) + Math.pow(y, 2)) + (x - 1) / (Math.pow(x - 1, 2) + Math.pow(y, 2));
         }
 
         @Override
@@ -57,8 +56,7 @@ public class Ode6VF {
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return -(x+1) / (Math.pow(x + 1, 2) + Math.pow(y, 2)) + (x-1) / (Math.pow(x - 1, 2) + Math.pow(y, 2));
-
+            return y / (Math.pow(x + 1, 2) + Math.pow(y, 2)) + y / (Math.pow(x - 1, 2) + Math.pow(y, 2));
         }
 
         @Override

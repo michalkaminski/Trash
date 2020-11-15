@@ -1,4 +1,4 @@
-package odes.components.odes;
+package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;

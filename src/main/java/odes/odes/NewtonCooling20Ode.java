@@ -1,4 +1,4 @@
-package odes.components.odes;
+package odes.odes;
 
 import odes.components.functions.FunctionNewtonCooling20C;
 import odes.components.functions.IFunction;

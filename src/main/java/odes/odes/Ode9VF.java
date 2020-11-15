@@ -1,14 +1,14 @@
-package odes.components.odes;
+package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;
 import odes.components.functions.initialcondition.InitialConditions;
 import odes.components.visualizations.EulerVisualizationVF2D;
 
-public class Ode4VF {
+public class Ode9VF {
     public static void main(String[] args) {
-        double SCALE = 3;
-        double STEP = 0.01d;
+        double SCALE = 5;
+        double STEP = 0.001d;
         double START = 0d;
         Pair<Double, Double>[] initialConditions = InitialConditions.getInitialConditions(
                 -3, 3, 5000);
@@ -30,13 +30,13 @@ public class Ode4VF {
             double x = arg[0];
             double y = arg[1];
             return x;
-         }
+        }
 
         @Override
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return (x + 1) / (Math.pow(x + 1, 2) + Math.pow(y, 2)) + (x - 1) / (Math.pow(x - 1, 2) + Math.pow(y, 2));
+            return y/ Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),0.5);
         }
 
         @Override
@@ -56,7 +56,7 @@ public class Ode4VF {
         public double derivative(double... arg) {
             double x = arg[0];
             double y = arg[1];
-            return y / (Math.pow(x + 1, 2) + Math.pow(y, 2)) + y / (Math.pow(x - 1, 2) + Math.pow(y, 2));
+            return -x/ Math.pow((Math.pow(x, 2) + Math.pow(y, 2)),2);
         }
 
         @Override
