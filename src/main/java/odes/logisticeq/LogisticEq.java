@@ -12,13 +12,16 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 /*
-*
-* Visualising what does it mean population growth curve. Iterating over logistic map to
-* increase/decrese population over period/time/iteration t. Around r=3.5 produces periodic
-* solution of population over the periods. For r around 3.9-4.0 produces chaotic prediction of
-* population size. Above 4.0 population extincts.
-*
-* */
+ *
+ * Visualising what does it mean population growth curve. Iterating over logistic map to
+ * increase/decrese population over period/time/iteration t. Around r=3.5 produces periodic
+ * solution of population over the periods. For r around 3.9-4.0 produces chaotic prediction of
+ * population size. Above 4.0 population extincts.
+ *
+ * X axis - population last year
+ * Y axis - population this year
+ *
+ * */
 
 @Slf4j
 public class LogisticEq {
@@ -31,7 +34,7 @@ public class LogisticEq {
 
     /* > */
     private static int noOfInterations = 2000;
-    private static double r = 4.0000000010;
+    private static double r = 3.50;
     private static double initialCondition = 0.001;
     /* < */
 
@@ -128,6 +131,16 @@ class LogisticEqVisualisation {
         StdDraw.line(0, -SCALE, 0, SCALE);
         StdDraw.line(-SCALE, 0, SCALE, 0);
 
+        StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
+
+        for (double xl = 0; xl < 1; xl = xl + 0.1)
+        {
+            StdDraw.line(xl, -0, xl, 1);
+            StdDraw.line(-0, xl, 1, xl);
+
+        }
+
+
 
         for (int i = 0; i <= x.length - 1; i++) {
             double currentValue = function.valueOf(this.x[i]);
@@ -138,20 +151,21 @@ class LogisticEqVisualisation {
             }
         }
 
-        StdDraw.setPenColor(Color.blue);
+        StdDraw.setPenColor(Color.DARK_GRAY);
 
-        double firstValue = initialCondition;
-        double currentVal;
+        double populationLastYear = initialCondition;
+        double populationThisYear;
 
         List<Pair<Double, Double>> doubleList = new ArrayList<>();
 
 
         for (int iteration = 0; iteration < noOfIterations - 1; iteration++) {
 
-            currentVal = function.valueOf(firstValue);
-            StdDraw.point(firstValue, currentVal);
-            doubleList.add(new Pair<>(firstValue, currentVal));
-            firstValue = currentVal;
+            populationThisYear = function.valueOf(populationLastYear);
+            StdDraw.point(populationLastYear, populationThisYear);
+            doubleList.add(new Pair<>(populationLastYear, populationThisYear));
+
+            populationLastYear = populationThisYear;
         }
 
 
