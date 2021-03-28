@@ -18,6 +18,9 @@ import java.util.stream.DoubleStream;
  * solution of population over the periods. For r around 3.9-4.0 produces chaotic prediction of
  * population size. Above 4.0 population extincts.
  *
+ * This is a very simple way of visualizing how streching and folding occurs in strange attractors.
+ * Here the
+ *
  * X axis - population last year
  * Y axis - population this year
  *
@@ -33,15 +36,13 @@ public class LogisticEq {
     private static double START = 0d;
 
     /* > */
-    private static int noOfInterations = 2000;
-    private static double r = 3.50;
+    private static int noOfInterations = 1500;
+    private static double r = 3.05;
     private static double initialCondition = 0.001;
     /* < */
 
     public static void main(String[] args) {
         IFunction function = new LogisticFunction();
-
-
         LogisticEqVisualisation vis = new LogisticEqVisualisation(
                 function,
                 x,
@@ -103,7 +104,6 @@ class LogisticEqVisualisation {
             double SCALE,
             double STEP,
             double START,
-
             double initialCondition,
             int noOfIterations
     ) {
@@ -112,14 +112,13 @@ class LogisticEqVisualisation {
         this.SCALE = SCALE;
         this.STEP_SIZE = STEP;
         this.START = START;
-
         this.initialCondition = initialCondition;
         this.noOfIterations = noOfIterations;
     }
 
     public void visualize() {
 
-        StdDraw.setCanvasSize(1200, 800);
+        StdDraw.setCanvasSize(900, 900);
         StdDraw.enableDoubleBuffering();
         StdDraw.clear();
 
@@ -127,19 +126,14 @@ class LogisticEqVisualisation {
         StdDraw.setYscale(-SCALE / 8, SCALE);
 
         /** axis */
+        StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
+        for (double xl = 0; xl < 1; xl = xl + 0.1) {
+            StdDraw.line(xl, -0, xl, 1);
+            StdDraw.line(-0, xl, 1, xl);
+        }
         StdDraw.setPenColor(StdDraw.BOOK_BLUE);
         StdDraw.line(0, -SCALE, 0, SCALE);
         StdDraw.line(-SCALE, 0, SCALE, 0);
-
-        StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
-
-        for (double xl = 0; xl < 1; xl = xl + 0.1)
-        {
-            StdDraw.line(xl, -0, xl, 1);
-            StdDraw.line(-0, xl, 1, xl);
-
-        }
-
 
 
         for (int i = 0; i <= x.length - 1; i++) {
@@ -152,23 +146,18 @@ class LogisticEqVisualisation {
         }
 
         StdDraw.setPenColor(Color.DARK_GRAY);
-
         double populationLastYear = initialCondition;
         double populationThisYear;
-
         List<Pair<Double, Double>> doubleList = new ArrayList<>();
 
-
         for (int iteration = 0; iteration < noOfIterations - 1; iteration++) {
-
             populationThisYear = function.valueOf(populationLastYear);
             StdDraw.point(populationLastYear, populationThisYear);
             doubleList.add(new Pair<>(populationLastYear, populationThisYear));
-
             populationLastYear = populationThisYear;
         }
 
-
+        StdDraw.setPenRadius(.006);
         for (int l = 0; l < doubleList.size() - 1; l = l + 1) {
             StdDraw.line(
                     doubleList.get(l).getKey(),
@@ -176,6 +165,8 @@ class LogisticEqVisualisation {
                     doubleList.get(l + 1).getKey(),
                     doubleList.get(l + 1).getValue()
             );
+//            System.out.println("x:"+ doubleList.get(l + 1).getKey());
+//            System.out.println( "y:"+doubleList.get(l + 1).getValue());
         }
 
         StdDraw.setPenRadius(defaultRadius);

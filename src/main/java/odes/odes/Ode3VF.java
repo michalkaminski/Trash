@@ -2,7 +2,7 @@ package odes.odes;
 
 import javafx.util.Pair;
 import odes.components.functions.IFunction;
-import odes.components.functions.initialcondition.InitialConditions;
+import odes.components.initialcondition.InitialConditions;
 import odes.components.visualizations.EulerVisualizationVF2D;
 
 public class Ode3VF {

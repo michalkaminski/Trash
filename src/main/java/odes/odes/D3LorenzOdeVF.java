@@ -1,7 +1,7 @@
 package odes.odes;
 
 import odes.components.functions.IFunction;
-import odes.components.functions.initialcondition.InitialConditions;
+import odes.components.initialcondition.InitialConditions;
 import odes.components.visualizations.ScatterVisualization3D;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.jzy3d.analysis.AnalysisLauncher;

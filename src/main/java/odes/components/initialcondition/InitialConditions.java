@@ -1,4 +1,4 @@
-package odes.components.functions.initialcondition;
+package odes.components.initialcondition;
 
 import javafx.util.Pair;
 import org.apache.commons.lang3.tuple.ImmutableTriple;

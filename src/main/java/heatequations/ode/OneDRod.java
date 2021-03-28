@@ -3,7 +3,7 @@ package heatequations.ode;
 import javafx.util.Pair;
 import odes.components.functions.FunctionNewtonCooling20C;
 import odes.components.functions.IFunction;
-import odes.components.functions.initialcondition.InitialConditions;
+import odes.components.initialcondition.InitialConditions;
 
 import java.util.Arrays;
 import java.util.List;

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Plane2Dcooling {
-
     static IFunction function = new FunctionNewtonCooling20C();
 
     public static void main(String args[]) throws IOException {
@@ -49,6 +48,8 @@ public class Plane2Dcooling {
             } else {
                 r = planePoints.get(i + 1);
             }
+            //TODO implement 2d laplacian istead of this derivative
+
             double T = c.getTx() + function.secondDerivative(l.getTx(), c.getTx(), r.getTx());
 //            double T = c.getTx() + (((l.getTx() + r.getTx()) / 2) - c.getTx());
             c.setTx(T);

@@ -2,7 +2,7 @@ package odes.odes;
 
 import lombok.extern.slf4j.Slf4j;
 import odes.components.functions.IFunction;
-import odes.components.functions.initialcondition.InitialConditions;
+import odes.components.initialcondition.InitialConditions;
 import odes.demos.StdDraw;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
