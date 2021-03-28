@@ -13,7 +13,7 @@ import static java.lang.Double.isNaN;
 
 @Getter
 @Setter
-public class RD implements Runnable {
+public class RD {
 
     private static final int INITIAL_MINIMUM_VALUE = 10;
     private double dt = 0.01;
@@ -91,10 +91,5 @@ public class RD implements Runnable {
         IntStream.range(0, arr.length)
                 .forEach(r -> IntStream.range(0, arr[0].length)
                         .forEach(c -> arr[r][c] = (0 + (INITIAL_MINIMUM_VALUE) * rand.nextDouble())));
-    }
-
-    @Override
-    public void run() {
-        iterate();
     }
 }
