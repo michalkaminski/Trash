@@ -35,19 +35,6 @@ public class ArrayVis2D extends JPanel {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-//    @Override
-//    public void update(Graphics g) {
-//        Graphics doublebuff;
-//        Image offscreen = null;
-//        Dimension d = getSize();
-//        offscreen = createImage(d.width, d.height);
-//        doublebuff = offscreen.getGraphics();
-//        doublebuff.setColor(getBackground());
-//        doublebuff.fillRect(0, 0, d.width, d.height);
-//        doublebuff.setColor(getForeground());
-//        paint(doublebuff);
-//        g.drawImage(offscreen, 0, 0, this);
-//    }
 
     @Override
     public void paintComponent(Graphics g) {

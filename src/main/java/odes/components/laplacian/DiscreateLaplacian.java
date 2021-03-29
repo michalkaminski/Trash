@@ -18,8 +18,8 @@ public class DiscreateLaplacian {
         //TODO to be implemented
         return (
                 +2 * U[x] -
-                        U[x - h] -
-                        U[x + h])
+                     U[x - h] -
+                     U[x + h])
                 / pow(h, 2);
     }
 
@@ -33,7 +33,6 @@ public class DiscreateLaplacian {
     public double getLaplacian2D(double U[][], int x, int y) {
         int h = 1;
         int size = U.length;
-
 
         int x1 = x + 1;
         int x0 = x - 1;
@@ -85,4 +84,38 @@ public class DiscreateLaplacian {
 //                / pow(h, 2);
 //    }
 
-}
+
+    public double getLaplacian3D(double U[][][], int x, int y, int z) {
+        int size = U.length;
+
+        int x1 = x + 1;
+        int x0 = x - 1;
+        int y1 = y + 1;
+        int y0 = y - 1;
+        int z1 = z + 1;
+        int z0 = z - 1;
+
+        if (x == 0) x0 = size - 1;
+        if (x == size - 1) x1 = 0;
+        if (y == 0) y0 = size - 1;
+        if (y == size - 1) y1 = 0;
+        if (z == 0) z0 = size - 1;
+        if (z == size - 1) z1 = 0;
+
+        return (
+           -8.0 * U[x][y][z] +
+
+                  U[x0][y0][z0] +
+                  U[x0][y1][z0] +
+                  U[x0][y0][z1] +
+                  U[x0][y1][z1] +
+
+                  U[x1][y0][z0] +
+                  U[x1][y1][z0] +
+                  U[x1][y0][z1] +
+                  U[x1][y1][z1]
+
+        );
+    }
+
+    }

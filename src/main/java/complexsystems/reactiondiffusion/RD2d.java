@@ -13,10 +13,10 @@ import static java.lang.Double.isNaN;
 
 @Getter
 @Setter
-public class RD {
+public class RD2d {
 
     private static final int INITIAL_MINIMUM_VALUE = 10;
-    private double dt = 0.01;
+    private double dt = 0.02;
     private double A = 3.5;
     private double B = 16;
 
@@ -41,7 +41,7 @@ public class RD {
     private PdeRD2dU pdeDuDt = new PdeRD2dU();
     private PdeRD2dV pdeDvDt = new PdeRD2dV();
 
-    public RD(int width, int height) {
+    public RD2d(int width, int height) {
         this.width = width;
         this.height = height;
 
@@ -61,10 +61,10 @@ public class RD {
         for (int y = 0; y <= height - 1; y++) {
             for (int x = 0; x <= width - 1; x++) {
 
-                pdeDuDt.calculateDuDt(uCopy, vCopy, x, y);
+                pdeDuDt.calculateDuDt2d(uCopy, vCopy, x, y);
                 dUdT = pdeDuDt.getdUdT();
 
-                pdeDvDt.calculateDvDt(uCopy, vCopy, x, y);
+                pdeDvDt.calculateDvDt2d(uCopy, vCopy, x, y);
                 dVdT = pdeDvDt.getdUdT();
 
                 newU = uCopy[x][y] + dUdT * dt;

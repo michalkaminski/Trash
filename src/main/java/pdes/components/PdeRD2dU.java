@@ -12,9 +12,14 @@ public class PdeRD2dU implements Ipde2d {
     public PdeRD2dU() {
     }
 
-    public void calculateDuDt(double[][] u, double[][] v, int x, int y) {
+    public void calculateDuDt2d(double[][] u, double[][] v, int x, int y) {
         dUdT = f(u[x][y], v[x][y]) + diffRate * lap.getLaplacian2D(u, x, y);
     }
+
+    public void calculateDuDt3d(double[][][] u, double[][][] v, int x, int y, int z) {
+        dUdT = f(u[x][y][z], v[x][y][z]) + diffRate * lap.getLaplacian3D(u, x, y, z);
+    }
+
 
     @Override
     public double getdUdT() {
