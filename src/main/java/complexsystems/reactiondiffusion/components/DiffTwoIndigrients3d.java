@@ -1,5 +1,6 @@
-package complexsystems.reactiondiffusion;
+package complexsystems.reactiondiffusion.components;
 
+import odes.components.visualizations.IterableArrayCalculation;
 import lombok.Getter;
 import lombok.Setter;
 import pdes.components.PdeRD2dU;
@@ -13,13 +14,10 @@ import static java.lang.Double.isNaN;
 
 @Getter
 @Setter
-public class RD3d {
+public class DiffTwoIndigrients3d implements IterableArrayCalculation {
 
     private static final int INITIAL_MINIMUM_VALUE = 10;
     private double dt = 0.01;
-    private double A = 3.5;
-    private double B = 16;
-
     private double[][][] u;
     private double[][][] v;
 
@@ -40,7 +38,7 @@ public class RD3d {
     private PdeRD2dU pdeDuDt = new PdeRD2dU();
     private PdeRD2dV pdeDvDt = new PdeRD2dV();
 
-    public RD3d(int size) {
+    public DiffTwoIndigrients3d(int size) {
         this.size = size;
 
         u = new double[size][size][size];
@@ -51,6 +49,7 @@ public class RD3d {
         randomizeArray(v);
     }
 
+    @Override
     public void iterate() {
 
         System.arraycopy(u, 0, uCopy, 0, u.length);

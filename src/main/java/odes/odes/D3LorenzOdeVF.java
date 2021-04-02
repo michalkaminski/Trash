@@ -10,7 +10,7 @@ public class D3LorenzOdeVF {
     public static void main(String[] args) throws Exception {
         double STEP = 0.001d;
         double START = 0d;
-        double BOUNDARY=20.0d;
+        double BOUNDARY = 20.0d;
         ImmutableTriple<Double, Double, Double>[] initialConditions = InitialConditions.getInitialConditions3D(
                 -BOUNDARY, BOUNDARY, 30);
 
@@ -42,7 +42,7 @@ public class D3LorenzOdeVF {
             double x = arg[0];
             double y = arg[1];
             double z = arg[2];
-            return 10 *(y - x);
+            return 10 * (y - x);
         }
 
         @Override
@@ -63,7 +63,7 @@ public class D3LorenzOdeVF {
             double x = arg[0];
             double y = arg[1];
             double z = arg[2];
-            return x*(28-z)-y;
+            return x * (28 - z) - y;
         }
 
         @Override
@@ -71,6 +71,7 @@ public class D3LorenzOdeVF {
             return 0;
         }
     }
+
     private static class ZFunction implements IFunction {
         @Override
         public double valueOf(double... arg) {
@@ -83,7 +84,7 @@ public class D3LorenzOdeVF {
             double x = arg[0];
             double y = arg[1];
             double z = arg[2];
-            return x*y - (8/3) * z;
+            return x * y - (8 / 3) * z;
 
         }
 

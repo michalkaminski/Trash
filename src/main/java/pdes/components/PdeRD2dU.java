@@ -5,7 +5,7 @@ import odes.components.laplacian.DiscreateLaplacian;
 public class PdeRD2dU implements Ipde2d {
 
     private double dUdT = 0.0;
-    private double diffRate = 3.5;
+    private double diffRate = 1;
 
     private DiscreateLaplacian lap = new DiscreateLaplacian();
 
