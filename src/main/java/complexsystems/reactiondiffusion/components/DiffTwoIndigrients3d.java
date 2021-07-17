@@ -6,7 +6,7 @@ import odes.components.visualizations.IterableArrayCalculation;
 import pdes.components.PdeRDTwoIndigrientsU;
 import pdes.components.PdeRDTwoIndigrientsV;
 
-import static complexsystems.arrays.RandomizeArrayUtils.randomizeArray;
+import static complexsystems.arrays.ArrayUtils.randomizeArray;
 import static java.lang.Double.isFinite;
 import static java.lang.Double.isNaN;
 
