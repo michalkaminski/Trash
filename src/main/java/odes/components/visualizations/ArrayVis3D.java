@@ -20,7 +20,7 @@ public class ArrayVis3D {
 
         Callable<double[][][]> task = () -> {
             iterableArrayCalculation.iterate();
-            return iterableArrayCalculation.getU();
+            return iterableArrayCalculation.getU3d();
         };
 
         int i = 0;

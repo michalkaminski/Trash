@@ -1,6 +1,6 @@
 package pdes.components;
 
-public interface Ipde2d {
+public interface IpdeOneIndigrient {
 
     /**
      * partial derivative du/dt value x with respect to t time
@@ -16,4 +16,9 @@ public interface Ipde2d {
 //    public double getDx(double[][] space2d, int x);
 //    public double getDy(double[][] space2d, int y);
 
-}
+    public void calculateDuDt(double[][] u, int x, int y);
+    public void calculateDuDt(double[][][]u, int x, int y, int z);
+    public void calculateDuDt(double[][] u, double[][] v, int x, int y);
+    public void calculateDuDt(double[][][] u, double[][][] v, int x, int y, int z);
+
+    }

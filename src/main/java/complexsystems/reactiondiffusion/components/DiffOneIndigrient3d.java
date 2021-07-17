@@ -1,13 +1,11 @@
 package complexsystems.reactiondiffusion.components;
 
-import odes.components.visualizations.IterableArrayCalculation;
 import lombok.Getter;
 import lombok.Setter;
-import pdes.components.PdeDiff2dU;
+import odes.components.visualizations.IterableArrayCalculation;
+import pdes.components.PdeDiffussionOneIndigrient;
 
-import java.util.Random;
-import java.util.stream.IntStream;
-
+import static complexsystems.arrays.RandomizeArrayUtils.randomizeArray;
 import static java.lang.Double.isFinite;
 import static java.lang.Double.isNaN;
 
@@ -31,14 +29,14 @@ public class DiffOneIndigrient3d implements IterableArrayCalculation {
     private double min = 0;
     private double max = 0;
 
-    private PdeDiff2dU pdeDuDt = new PdeDiff2dU();
+    private PdeDiffussionOneIndigrient pdeDuDt = new PdeDiffussionOneIndigrient();
 
     public DiffOneIndigrient3d(int size) {
         this.size = size;
 
         u = new double[size][size][size];
         uCopy = new double[size][size][size];
-        randomizeArray(u);
+        randomizeArray(u, INITIAL_MINIMUM_VALUE);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class DiffOneIndigrient3d implements IterableArrayCalculation {
             for (int x = 0; x <= size - 1; x++) {
                 for (int z = 0; z <= size - 1; z++) {
 
-                    pdeDuDt.calculateDuDt3d(uCopy, x, y, z);
+                    pdeDuDt.calculateDuDt(uCopy, x, y, z);
                     dUdT = pdeDuDt.getdUdT();
 
                     newU = uCopy[x][y][z] + dUdT * dt;
@@ -67,11 +65,14 @@ public class DiffOneIndigrient3d implements IterableArrayCalculation {
 
     }
 
-    private void randomizeArray(double[][][] arr) {
-        Random rand = (new Random());
-        IntStream.range(0, arr.length)
-                .forEach(r -> IntStream.range(0, arr[0].length)
-                        .forEach(c -> IntStream.range(0, arr[0][0].length)
-                                .forEach(z -> arr[r][c][z] = (0 + (INITIAL_MINIMUM_VALUE) * rand.nextDouble()))));
+    @Override
+    public double[][][] getU3d() {
+        return getU();
     }
+
+    @Override
+    public double[][] getU2d() {
+        return null;
+    }
+
 }

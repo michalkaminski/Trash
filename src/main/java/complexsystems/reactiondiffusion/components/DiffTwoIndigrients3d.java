@@ -1,14 +1,12 @@
 package complexsystems.reactiondiffusion.components;
 
-import odes.components.visualizations.IterableArrayCalculation;
 import lombok.Getter;
 import lombok.Setter;
-import pdes.components.PdeRD2dU;
-import pdes.components.PdeRD2dV;
+import odes.components.visualizations.IterableArrayCalculation;
+import pdes.components.PdeRDTwoIndigrientsU;
+import pdes.components.PdeRDTwoIndigrientsV;
 
-import java.util.Random;
-import java.util.stream.IntStream;
-
+import static complexsystems.arrays.RandomizeArrayUtils.randomizeArray;
 import static java.lang.Double.isFinite;
 import static java.lang.Double.isNaN;
 
@@ -35,8 +33,8 @@ public class DiffTwoIndigrients3d implements IterableArrayCalculation {
     private double min = 0;
     private double max = 0;
 
-    private PdeRD2dU pdeDuDt = new PdeRD2dU();
-    private PdeRD2dV pdeDvDt = new PdeRD2dV();
+    private PdeRDTwoIndigrientsU pdeDuDt = new PdeRDTwoIndigrientsU();
+    private PdeRDTwoIndigrientsV pdeDvDt = new PdeRDTwoIndigrientsV();
 
     public DiffTwoIndigrients3d(int size) {
         this.size = size;
@@ -45,8 +43,8 @@ public class DiffTwoIndigrients3d implements IterableArrayCalculation {
         v = new double[size][size][size];
         uCopy = new double[size][size][size];
         vCopy = new double[size][size][size];
-        randomizeArray(u);
-        randomizeArray(v);
+        randomizeArray(u, INITIAL_MINIMUM_VALUE);
+        randomizeArray(v, INITIAL_MINIMUM_VALUE);
     }
 
     @Override
@@ -62,7 +60,7 @@ public class DiffTwoIndigrients3d implements IterableArrayCalculation {
                     pdeDuDt.calculateDuDt3d(uCopy, vCopy, x, y, z);
                     dUdT = pdeDuDt.getdUdT();
 
-                    pdeDvDt.calculateDvDt3d(uCopy, vCopy, x, y, z);
+                    pdeDvDt.calculateDuDt(uCopy, vCopy, x, y, z);
                     dVdT = pdeDvDt.getdUdT();
 
                     newU = uCopy[x][y][z] + dUdT * dt;
@@ -85,11 +83,13 @@ public class DiffTwoIndigrients3d implements IterableArrayCalculation {
 
     }
 
-    private void randomizeArray(double[][][] arr) {
-        Random rand = (new Random());
-        IntStream.range(0, arr.length)
-                .forEach(r -> IntStream.range(0, arr[0].length)
-                        .forEach(c -> IntStream.range(0, arr[0][0].length)
-                                .forEach(z -> arr[r][c][z] = (0 + (INITIAL_MINIMUM_VALUE) * rand.nextDouble()))));
+    @Override
+    public double[][][] getU3d() {
+        return getU();
+    }
+
+    @Override
+    public double[][] getU2d() {
+        return null;
     }
 }

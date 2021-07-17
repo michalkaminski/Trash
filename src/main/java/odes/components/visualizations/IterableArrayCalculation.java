@@ -4,7 +4,9 @@ public interface IterableArrayCalculation {
 
     void iterate();
 
-    double[][][] getU();
+    double[][][] getU3d();
+
+    double[][] getU2d();
 
     double getMin();
 

@@ -17,6 +17,8 @@ import nncarina.components.training.BackPropagation;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static java.util.Arrays.asList;
+
 @Slf4j
 @SpringBootApplication
 public class Demo1 {
@@ -53,17 +55,17 @@ public class Demo1 {
         DataRow dataRow4 = new DataRow();
 
 
-        dataRow1.setVariables(new ArrayList<>(Arrays.asList(0f, 1f, 0f)));
-        dataRow1.setResults(new ArrayList<>(Arrays.asList(0f)));
+        dataRow1.setVariables(new ArrayList<>(asList(0f, 1f, 0f)));
+        dataRow1.setResults(new ArrayList<>(asList(0f)));
 
-        dataRow2.setVariables(new ArrayList<>(Arrays.asList(1f, 1f, 0f)));
-        dataRow2.setResults(new ArrayList<>(Arrays.asList(1f)));
+        dataRow2.setVariables(new ArrayList<>(asList(1f, 1f, 0f)));
+        dataRow2.setResults(new ArrayList<>(asList(1f)));
 
-        dataRow3.setVariables(new ArrayList<>(Arrays.asList(1f, 0f, 0f)));
-        dataRow3.setResults(new ArrayList<>(Arrays.asList(1f)));
+        dataRow3.setVariables(new ArrayList<>(asList(1f, 0f, 0f)));
+        dataRow3.setResults(new ArrayList<>(asList(1f)));
 
-        dataRow4.setVariables(new ArrayList<>(Arrays.asList(0f, 0f, 0f)));
-        dataRow4.setResults(new ArrayList<>(Arrays.asList(0f)));
+        dataRow4.setVariables(new ArrayList<>(asList(0f, 0f, 0f)));
+        dataRow4.setResults(new ArrayList<>(asList(0f)));
 
         dataSet.getDataRows().add(dataRow1);
         dataSet.getDataRows().add(dataRow2);

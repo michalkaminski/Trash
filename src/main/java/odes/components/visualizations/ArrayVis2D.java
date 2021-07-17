@@ -4,6 +4,7 @@ import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.*;
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -16,7 +17,7 @@ public class ArrayVis2D extends JPanel {
 
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    public ArrayVis2D(int width, int height) {
+    public ArrayVis2D(int width, int height) throws ExecutionException, InterruptedException {
 
         JFrame frame = new JFrame("array2d Simulation");
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,6 +34,29 @@ public class ArrayVis2D extends JPanel {
         frame.setAlwaysOnTop(true);
         frame.setResizable(true);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+    }
+
+    public void visualize(int size, IterableArrayCalculation iterableArrayCalculation) throws ExecutionException, InterruptedException {
+
+
+        ExecutorService executor = Executors.newWorkStealingPool(5);
+        Future<double[][]> future;
+
+        Callable<double[][]> task = () -> {
+            iterableArrayCalculation.iterate();
+            return iterableArrayCalculation.getU2d();
+        };
+
+        int i = 0;
+        while (true) {
+            future = executor.submit(task);
+            setSpace2d(future.get());
+            setMin(iterableArrayCalculation.getMin());
+            setMax(iterableArrayCalculation.getMax());
+            repaint();
+            System.out.println(i++);
+        }
     }
 
 

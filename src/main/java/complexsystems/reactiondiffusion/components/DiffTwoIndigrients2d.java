@@ -2,18 +2,18 @@ package complexsystems.reactiondiffusion.components;
 
 import lombok.Getter;
 import lombok.Setter;
-import pdes.components.PdeRD2dU;
-import pdes.components.PdeRD2dV;
+import odes.components.visualizations.IterableArrayCalculation;
+import pdes.components.PdeRDTwoIndigrientsU;
+import pdes.components.PdeRDTwoIndigrientsV;
 
-import java.util.Random;
-import java.util.stream.IntStream;
-
+import static complexsystems.arrays.RandomizeArrayUtils.randomizeArray;
 import static java.lang.Double.isFinite;
 import static java.lang.Double.isNaN;
+import static java.lang.System.arraycopy;
 
 @Getter
 @Setter
-public class DiffTwoIndigrients2d {
+public class DiffTwoIndigrients2d implements IterableArrayCalculation {
 
     private static final int INITIAL_MINIMUM_VALUE = 10;
     private double dt = 0.02;
@@ -36,8 +36,8 @@ public class DiffTwoIndigrients2d {
     private double min = 0;
     private double max = 0;
 
-    private PdeRD2dU pdeDuDt = new PdeRD2dU();
-    private PdeRD2dV pdeDvDt = new PdeRD2dV();
+    private PdeRDTwoIndigrientsU pdeDuDt = new PdeRDTwoIndigrientsU();
+    private PdeRDTwoIndigrientsV pdeDvDt = new PdeRDTwoIndigrientsV();
 
     public DiffTwoIndigrients2d(int width, int height) {
         this.width = width;
@@ -47,22 +47,22 @@ public class DiffTwoIndigrients2d {
         v = new double[width][height];
         uCopy = new double[width][height];
         vCopy = new double[width][height];
-        randomizeArray(u);
-        randomizeArray(v);
+        randomizeArray(u, INITIAL_MINIMUM_VALUE);
+        randomizeArray(v, INITIAL_MINIMUM_VALUE);
     }
 
     public void iterate() {
 
-        System.arraycopy(u, 0, uCopy, 0, u.length);
-        System.arraycopy(v, 0, vCopy, 0, u.length);
+        arraycopy(u, 0, uCopy, 0, u.length);
+        arraycopy(v, 0, vCopy, 0, u.length);
 
         for (int y = 0; y <= height - 1; y++) {
             for (int x = 0; x <= width - 1; x++) {
 
-                pdeDuDt.calculateDuDt2d(uCopy, vCopy, x, y);
+                pdeDuDt.calculateDuDt(uCopy, vCopy, x, y);
                 dUdT = pdeDuDt.getdUdT();
 
-                pdeDvDt.calculateDvDt2d(uCopy, vCopy, x, y);
+                pdeDvDt.calculateDuDt(uCopy, vCopy, x, y);
                 dVdT = pdeDvDt.getdUdT();
 
                 newU = uCopy[x][y] + dUdT * dt;
@@ -84,10 +84,14 @@ public class DiffTwoIndigrients2d {
 
     }
 
-    private void randomizeArray(double[][] arr) {
-        Random rand = (new Random());
-        IntStream.range(0, arr.length)
-                .forEach(r -> IntStream.range(0, arr[0].length)
-                        .forEach(c -> arr[r][c] = (0 + (INITIAL_MINIMUM_VALUE) * rand.nextDouble())));
+    @Override
+    public double[][][] getU3d() {
+        return null;
     }
+
+    @Override
+    public double[][] getU2d() {
+        return getU();
+    }
+
 }

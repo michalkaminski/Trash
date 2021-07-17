@@ -3,18 +3,16 @@ package complexsystems.reactiondiffusion.components;
 import lombok.Getter;
 import lombok.Setter;
 import odes.components.visualizations.IterableArrayCalculation;
-import pdes.components.PdeDiffussionOneIndigrient;
+import pdes.components.IpdeOneIndigrient;
 
 import static complexsystems.arrays.RandomizeArrayUtils.randomizeArray;
 import static java.lang.Double.isFinite;
 import static java.lang.Double.isNaN;
 
-@Getter
 @Setter
-public class DiffOneIndigrient2d implements IterableArrayCalculation {
+@Getter
+public class Iterate2dArray implements IterableArrayCalculation {
 
-    private static final int INITIAL_MINIMUM_VALUE = 10;
-    private double dt = 0.001;
 
     private double[][] u;
 
@@ -30,11 +28,17 @@ public class DiffOneIndigrient2d implements IterableArrayCalculation {
     private double min = 0;
     private double max = 0;
 
-    private PdeDiffussionOneIndigrient pdeDuDt = new PdeDiffussionOneIndigrient();
+    private double INITIAL_MINIMUM_VALUE = 10;
+    private double dt = 0.001;
 
-    public DiffOneIndigrient2d(int width, int height) {
+    private IpdeOneIndigrient pdeDuDt;
+
+    public Iterate2dArray(int width, int height, double initialMinimumValue, double dt, IpdeOneIndigrient ipdeOneIndigrient) {
         this.width = width;
         this.height = height;
+        this.pdeDuDt = ipdeOneIndigrient;
+        this.dt = dt;
+        this.INITIAL_MINIMUM_VALUE = initialMinimumValue;
 
         u = new double[width][height];
         uCopy = new double[width][height];
@@ -71,7 +75,7 @@ public class DiffOneIndigrient2d implements IterableArrayCalculation {
 
     @Override
     public double[][] getU2d() {
-        return getU();
+        return getU2d();
     }
 
 }
